@@ -1,0 +1,70 @@
+/** Site Header
+-------------------------------------------------------------- 
+header#masthead .site-header
+	.inner-header
+		.site-branding
+			h1.site-title
+			h2.site-description
+		nav#site-navigation .main-navigation	
+			.menu
+				.nav-menu
+					li 
+						.children
+-------------------------------------------------------------- */
+.site-header {
+	background: @sec-color;
+}	
+.QRprintonly {
+	display:none;
+}
+.site-branding {
+	width: 80%;
+	display: inline;
+	float: left;
+	
+	.site-title {
+		margin: 0;
+		text-align: center;
+	}
+	.site-description {	
+		display: none;
+	}
+	a {
+		text-decoration: none;
+	}	
+}
+ 
+/** Breakpoint - 600 **/
+@media only screen and (min-width: 600px) {
+	.wrap {
+		.max-width(1000px); 
+		margin: 0 auto 0;	
+	}
+	.site-header {
+		//.margin-top(20px);
+	}	
+	.site-branding {
+		.padding(10px);
+		width: 100%;
+		color: @white;
+		.wrap;
+		display: block;
+		float: none;
+			
+		.site-title {
+			text-align: left;
+			float: left;
+			.padding-top(10px);
+		}
+		.site-description {	
+			display: block;
+		}
+		a {
+			color: @white;
+		}	
+		img {
+			float: right;
+			display: inline;
+		}
+	}
+}
