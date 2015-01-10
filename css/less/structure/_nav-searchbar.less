@@ -22,10 +22,12 @@ input[type="search"] {
 .search-box-wrapper {
 	z-index: 2;
 	width: 100%;
+	.padding-bottom(5px);
 }
 .search-box {
-	.padding(5px);
+	.padding(2px);
 	background: @grey;
+	.border-radius(5px);
 	
 	.search-field {
 		.padding(5px);
@@ -46,10 +48,18 @@ input[type="search"] {
 
 /** Breakpoint - 600 **/
 @media only screen and (min-width: 600px) {
+	.wrap {
+		.max-width(1000px); 
+		margin: 0 auto 0;	
+	} 
 	.search-mobile {
 		display: none;
 	}
 	.search-not-mobile {
 		display: inline-block;
 	}
+	.search-box-wrapper {
+		.wrap;
+	}
+	
 }

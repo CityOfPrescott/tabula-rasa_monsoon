@@ -13,6 +13,9 @@
 		float: left;
 		position: relative;
 		display: inline-block;
+		text-transform: uppercase;
+		font-family: @heading-font;
+		.font-size(16px);
 		
 		a {
 			display: block;
@@ -92,12 +95,20 @@
 
 /** Breakpoint - 600 **/
 @media only screen and (min-width: 600px) {
+	.wrap {
+		.max-width(1000px); 
+		margin: 0 auto 0;	
+	}
 	.main-navigation {
-		.margin-top(20px);
+		.margin-top(10px);
+		.margin-bottom(-6px);
 		display: inline-block;
 		width: 100%;
 		border-top: 2px solid @grey;
-		border-bottom: 2px solid @grey;	
+		
+		.menu-inner {
+			.wrap;
+		}
 		
 		.mmenu-toggle {
 			.height(44px);

@@ -14,12 +14,6 @@
 
 	<div class="entry-content">
 		<?php the_content(); ?>
-		<?php
-			wp_link_pages( array(
-				'before' => '<div class="page-links">' . __( 'Pages:', 'tabula-rasa' ),
-				'after'  => '</div>',
-			) );
-		?>
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">
@@ -41,9 +35,9 @@
 			} else {
 				// But this blog has loads of categories so we should probably display them here
 				if ( '' != $tag_list ) {
-					$meta_text = __( 'This entry was posted in %1$s and tagged %2$s. Bookmark the <a href="%3$s" rel="bookmark">permalink</a>.', 'tabula-rasa' );
+					$meta_text = __( 'This entry was posted in %1$s and tagged %2$s.', 'tabula-rasa' );
 				} else {
-					$meta_text = __( 'This entry was posted in %1$s. Bookmark the <a href="%3$s" rel="bookmark">permalink</a>.', 'tabula-rasa' );
+					$meta_text = __( 'This entry was posted in %1$s.', 'tabula-rasa' );
 				}
 
 			} // end check for categories on this blog
@@ -51,8 +45,7 @@
 			printf(
 				$meta_text,
 				$category_list,
-				$tag_list,
-				get_permalink()
+				$tag_list
 			);
 		?>
 

@@ -13,10 +13,14 @@
 <!--[if (IE 7)&!(IEMobile)]><html <?php language_attributes(); ?> class="no-js lt-ie9 lt-ie8"><![endif]-->
 <!--[if (IE 8)&!(IEMobile)]><html <?php language_attributes(); ?> class="no-js lt-ie9"><![endif]-->
 <!--[if gt IE 8]><!--> <html <?php language_attributes(); ?> class="no-js"><!--<![endif]-->
+<!--[if lte IE 8]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title><?php wp_title( '|', true, 'right' ); ?></title>
 	<!-- Not sure what this does -->
 	<link rel="profile" href="http://gmpg.org/xfn/11">
@@ -43,7 +47,7 @@
 		
 		<div class="site-branding">	
 			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<img src="<?php echo get_template_directory_uri();?>/images/city_logo_50.png" />
+			<a href="http://www.prescott-az.gov/"><img src="<?php echo get_template_directory_uri();?>/images/city_logo_50.png" /></a>
 		</div>
 		<div class="search-mobile">
 			<i class="fa fa-search"></i>
@@ -60,13 +64,15 @@
 			" />
 		</div>	
 		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<!-- used to use tr_main_nav() from bones. switched back to _s. unneeded arguments -->
-			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'container_class' => 'mmenu-toggle', 'menu_class' => 'nav-menu') ); ?>
-			<div class="search-not-mobile">
-			<i class="fa fa-search"></i>
-			<a href="#search-container" class="screen-reader-text"><?php _e( 'Search', 'tabula-rasa' ); ?></a>
-			</div>				
-			<?php //tr_social_menu(); ?>
+			<div class="menu-inner">
+				<!-- used to use tr_main_nav() from bones. switched back to _s. unneeded arguments -->
+				<?php wp_nav_menu( array( 'theme_location' => 'primary', 'container_class' => 'mmenu-toggle', 'menu_class' => 'nav-menu') ); ?>
+				<div class="search-not-mobile">
+				<i class="fa fa-search"></i>
+				<a href="#search-container" class="screen-reader-text"><?php _e( 'Search', 'tabula-rasa' ); ?></a>
+				</div>				
+				<?php //tr_social_menu(); ?>
+			</div>
 		</nav><!-- #site-navigation -->
 		<div id="search-container" class="search-box-wrapper">
 			<div class="search-box">

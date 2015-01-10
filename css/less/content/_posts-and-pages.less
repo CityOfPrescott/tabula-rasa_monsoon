@@ -9,16 +9,25 @@
 -------------------------------------------------------------- */
 .content-area {
 	.site-main {
-		article {}
+		article {
+			.margin-bottom(20px);
+			border-bottom:1px solid @sec-color;
+		}
 	}
 }
+.archive-thumb {
+	.margin-right(10px);
+	display: inline;
+	float: left;
+}
 .entry-header {
+	
 	.entry-title {
-		margin-bottom: 0;
+		display: inline;
 	}
 	.entry-meta {
 		.font-size(14px);
-		display: inline-block;
+		display: block;
 		
 		.posted-on {
 			time {}
@@ -34,10 +43,14 @@
 	}	
 }
 .entry-content {
+	.margin-top(5px);
 	p {}
 	img {}
 	a {}
 }
 .entry-footer {
+	clear: both;
+	.padding-top(10px);
+	
 	a {}
 }

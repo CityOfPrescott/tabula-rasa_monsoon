@@ -1,0 +1,78 @@
+City Council - 1000
+City Clerk - 1400
+City Court - 1800
+City Manager - 2200
+City Manager - 2200/Human Resources - 2205
+City Manager - 2200/Public Communications - 2220
+City Manager - 2200/Growth Mgt and Partnerships - 2230
+Legal Department - 2600
+Legal Department - 2600/Risk Management - 2625
+Budget and Finance - 3000
+Budget and Finance - 3000/Sales Tax - 3005
+Budget and Finance - 3000/Mail\/Copy Center - 3010
+Budget and Finance - 3000/Information Technology - 3015
+Budget and Finance - 3000/Utility Billing - 3020
+Tourism - 3410
+Tourism - 3410/Special Events - 3412
+Tourism - 3410/Economic Development - 3420
+Community Development - 3800
+Community Development - 3800/Building Safety - 3805
+Community Development - 3800/Economic Development - 3820
+Parks Rec and Library - 4200
+Parks Rec and Library - 4200/Recreation Programming - 4215
+Parks Rec and Library - 4200/Parks and Trails Maintenance - 4220
+Parks Rec and Library - 4200/Lakes Management - 4225
+Parks Rec and Library - 4200/Tournaments - 4230
+Parks Rec and Library - 4200/Special Projects - 4235
+Library Public Services - 4400
+Library Public Services - 4400/Library Support Services - 4405
+Police Department - 4600
+Police Department - 4600/Records - 4605
+Police Department - 4600/Traffic Enforcement - 4610
+Police Department - 4600/Investigations - 4615
+Police Department - 4600/Patrol - 4620
+Police Department - 4600/Swat - 4622
+Police Department - 4600/Special Enforcement - 4625
+Police Department - 4600/Training - 4630
+Police Department - 4600/Community Services - 4635
+Police Department - 4600/Animal Control - 4645
+Police Department - 4600/Code Compliance Section - 4650
+Fire Department - 5000
+Fire Department - 5000/Prevention - 5005
+Fire Department - 5000/Suppression - 5010
+Fire Department - 5000/Emergency Medical Services - 5012
+Fire Department - 5000/Training - 5015
+Fire Department - 5000/Wildland - 5020
+Regional Communications - 5200
+Streets - 5400
+Streets - 5400/Transportation Services - 5410
+Water - 5800
+Water - 5800/Meter Reading - 5810
+Water - 5800/Water Production - 5815
+Water - 5800/Water Distribution - 5820
+Water - 5800/Wastewater - 5850
+Water - 5800/Wastewater Treatment Plant - 5855
+Water - 5800/Wastewater Collection - 5860
+Water - 5800/Effluent Delivery - 5865
+Transfer Station - 6600
+Transfer Station - 6600/Residential Refuse - 6601
+Transfer Station - 6600/Commercial Refuse - 6602
+Transfer Station - 6600/Landfill - 6605
+Transfer Station - 6600/Streets Operation - 6610
+Transfer Station - 6600/Rodeo Grounds - 6613
+Transfer Station - 6600/Parking Garage - 6620
+Transfer Station - 6600/Facilities Maintenance - 6625
+Transfer Station - 6600/Fleet Maintenance - 6630
+Transfer Station - 6600/Vehicle Replacement - 6635
+Golf Course - 7000
+Golf Course - 7000/Maintenance - 7005
+Golf Course - 7000/Proshop - 7010
+Golf Course - 7000/Carts - 7015
+Golf Course - 7000/Restaurant - 7020
+Airport - 7400
+Airport - 7400/Terminal Operations - 7405
+Airport - 7400/Airside - 7410
+Airport - 7400/Landside - 7415
+Engineering - 7800
+Engineering - 7800/Construction Services - 7805
+Engineering - 7800/Public Works Projects - 7810	

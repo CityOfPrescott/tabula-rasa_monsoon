@@ -1,0 +1,16 @@
+.basic-info textarea {
+	width: 100%;
+	height: 100px;
+}
+.budget-table {
+	clear: both;
+}
+.budget-table ul {
+	width: 14%;
+	display: inline-block;
+}
+.budget-table ul li {
+	height: 30px;
+	overflow: hidden;
+}
+

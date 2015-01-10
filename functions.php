@@ -112,4 +112,7 @@ CUSTOMIZE ADMIN
 HELP PAGE
 	-  my_help_menu
 ------------------------------------------------------------------*/
+require_once('inc/functions-old-monsoon.php');
+
+include_once ('inc/cap-improvements/functions.php');
 ?>

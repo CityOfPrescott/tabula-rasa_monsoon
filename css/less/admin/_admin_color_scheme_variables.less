@@ -4,7 +4,7 @@
 @admin-text-color: @text-color;
 @admin-base-color: @prim-color;
 @admin-icon-color: hsl( hue( @admin-base-color ), 7%, 95% );
-@admin-highlight-color: @sec-color;
+@admin-highlight-color: lighten(@sec-color, 9%);
 @admin-notification-color: #d54e21;
 @admin-action-color: @admin-highlight-color;
 
@@ -13,21 +13,21 @@
 
 @link: @link-color;
 @link-focus: @link-hover;
-
+ 
 @prim-button-color: @sec-color;
-@prim-button-text-color: @admin-text-color;
+@prim-button-text-color: @prim-color;
 @sec-button-color: @sec-color;
-@sec-button-text-color: @admin-text-color;
+@sec-button-text-color: @prim-color;
 @form-checked: @admin-highlight-color;
 
 
 // admin menu & admin-bar
-@menu-text: @admin-text-color;
+@menu-text: @prim-color;
 @menu-icon: @admin-icon-color;
-@menu-background: @admin-base-color;
+@menu-background: @sec-color;
 
-@menu-highlight-text: @admin-text-color;
-@menu-highlight-icon: @admin-text-color;
+@menu-highlight-text: @prim-color;
+@menu-highlight-icon: @prim-color;
 @menu-highlight-background: @admin-highlight-color;
 
 @menu-current-text: @menu-highlight-text;

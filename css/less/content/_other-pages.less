@@ -49,3 +49,270 @@
 /** Page 
 -------------------------------------------------------------- */
 .page {}
+
+/** Sections
+-------------------------------------------------------------- */
+#column_1 {
+	float: left;
+	width: 48%;
+	margin-right: 4%;
+}
+#column_2 {
+	float: left;
+	width: 48%;
+}
+ul#nav {
+	margin: 0;
+	padding: 0;
+	
+	li {
+		margin-bottom: 20px;
+		background: #efefef;
+		border: 1px solid #999;
+		min-height: 70px;
+		list-style: none;
+		
+		a,
+		a:link,
+		a:visited
+		{
+			color: black;
+			text-decoration: none;		
+		}
+	}
+}
+.button_portal {
+	border: 1px solid #999;
+	float: left;
+	margin: 5px 5px 5px 5px;
+	width: 50px;
+}
+.old_portal .title { 
+	font-weight: bold; 
+	margin-left: 5px; 
+	display: block; 
+}
+img.h2title {
+	float: left;
+	display: block;
+	width: 50px;
+	padding-right: 20px;
+}
+.old_portal h2 {
+	padding-top:10px;
+	display: inline;
+}
+
+
+/** HR Handbook
+-------------------------------------------------------------- */
+.toc h4 {
+	font-size: 90%;
+	text-align: left;
+	margin: 15px 0 5px 0;
+	background: #efefef;
+	padding: 5px;
+	border: 1px solid #ccc;
+	font-weight: normal;
+  }
+.toc h4 a {
+	color: #333;
+	text-decoration: none;
+  }
+.toc h4 a:hover {
+	color: #FF9900;
+  }
+.toc h5 {
+	font-size: 100%;
+  }
+.toc h6 {
+	font-size: 100%;
+	color: #333;
+	margin: 5px 0 0 0;
+	padding: 0;
+  }
+
+
+.toc p {
+	font-size: 90%;
+  }
+.toc ol li p {
+	font-size: 100%;
+  }
+.toc ol ol p, .toc ol ol h5 {
+	font-size: 105%;
+  }
+.toc ol ol li {
+	font-size: 95%;
+  }
+.toc ol ol ul dl {
+	font-size: 105%;
+  }
+.toc ol dl {
+	font-size: 100%;
+  }
+.toc ol dl dt {
+	font-weight: bold;
+	color: #333;
+	}
+.toc ol dl dd {
+	margin: 0 0 0 20px;
+	padding: 1px 0 8px 0;
+  }
+.toc ol ol ul dl dt {
+	font-weight: bold;
+	color: #333;
+	font-size: 95%;
+  }
+.toc ol ol ul dl dd {
+	margin: 0 0 0 20px;
+	padding: 1px 0 8px 0;
+  }
+.toc ol ol li table {
+	font-size: 130%;
+  }
+.toc ol ol ul li {
+	font-size: 100%;
+	padding: 1px 0 8px 0;
+  }
+.toc ol ol ol li {
+	font-size: 100%;
+	}
+.toc dl {
+	font-size: 90%;
+  }
+.toc dl dt {
+	font-weight: bold;
+	color: #333;
+	margin: 0 0 0 20px;
+  }
+.toc dl dd {
+	margin: 0 0 0 20px;
+	padding: 2px 0 15px 0;
+  }
+
+.toc tfoot tr td {
+	font-size: 70%;
+	color: #333;
+	padding: 12px 5px 5px 5px;
+  }
+
+.center {
+	text-align: center;
+  }
+
+blockquote {
+	font-style: italic;
+  }
+
+#jobs {
+	width: 750px;
+	margin: 40px 0 20px 0;
+	border-collapse: collapse;
+	font-size: 90%;
+  	}
+#jobs thead th {
+	font-size: 90%;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	color: #333;
+	padding: 0 5px 8px 5px;
+  	}
+#jobs thead th.left {
+	text-align: left;
+  	}
+
+#jobs tbody td.center {
+	text-align: center;
+  	}
+
+#jobs tbody td {
+	border-bottom: 1px solid #ccc;
+	padding: 12px 5px 12px 5px;
+  	}
+#jobs tbody td a {
+	text-decoration: none;
+  }
+#jobs tbody td a:hover {
+	color: #FF9900;
+  }
+
+#jobs tfoot td {
+	padding: 12px 5px 12px 5px;
+	font-size: 70%;
+	color: #333;
+  }
+
+
+#jobs tbody tr:hover {
+	background: #FFFFCC;
+  	}
+  	
+#jobs img {
+	padding: 2px 0 0 8px;
+	margin: 0;
+	border: none;
+  }
+	
+/* Asbuilt Results */	
+.asbuilt_results {
+	border-bottom: 1px solid #ccc; 
+	padding: 5px; 
+	overflow: hidden;
+	
+	&:hover {
+		background: #FFC!important;
+	}
+
+	label { 
+		font-weight: bold;
+	}
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		
+		li {
+			background: none;
+			padding: 0;
+		}
+	}
+	p {
+		text-align: center;
+	}
+	&:nth-child(odd) {
+		background: #EEF6FB;
+	}
+	&:nth-child(even) {
+		background: #fff;
+	}	
+	.numbers ul li {
+		width: 50%;
+		
+		&:nth-of-type(1) { 
+			float: left; 
+		}
+		&:nth-of-type(2) { 
+			float: right; 
+			text-align: right;
+		}		
+	}
+	.name_street {
+		clear: both;
+	}
+	.options {
+		clear: both;
+		
+		p {
+			float:left; 
+			margin: 0;
+		}
+		ul li {
+			float: left; 
+			padding-right: 15px;
+		}		
+	}
+}
+.results + .asbuilt_results {
+	border-top: 1px solid #ccc;
+}

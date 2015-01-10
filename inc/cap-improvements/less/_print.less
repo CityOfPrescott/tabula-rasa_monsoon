@@ -1,0 +1,107 @@
+/******************************************************************
+Site Name: Tabula Rasa
+Author: Kenny Scott
+Stylesheet: Print Stylesheet
+
+Sources:
+http://www.webdesignerdepot.com/2010/01/10-tips-for-better-print-style-sheets/
+http://www.smashingmagazine.com/2013/03/08/tips-and-tricks-for-print-style-sheets/
+******************************************************************/
+* {
+	background: transparent !important;
+	color: black !important;
+	text-shadow: none !important;
+	filter:none !important;
+	-ms-filter: none !important;
+}
+body {-webkit-print-color-adjust: exact;}
+.site-main,
+article {
+	width: 100%; 
+	margin: 0; 
+	float: none;	
+}
+a, a:visited {
+	font-weight: bolder; 
+	text-decoration: none; 
+	color: #06c;
+
+	// show links on printed pages
+	&[rel="external"]:after {
+		display: none;
+	}	
+}
+
+.entry-title:after {
+		display: none;
+}
+
+a:link { 
+	font-weight: bolder; 
+	text-decoration: none; 
+	color: #06c; 
+}
+pre, blockquote {
+	border: 1px solid #999;
+	page-break-inside: avoid;
+}
+
+thead {
+	display: table-header-group;
+}
+
+img {
+	max-width: 100% !important;
+}
+
+@page :left{ margin: 0.5cm; }
+@page :right{ margin: 0.8cm; }
+
+h1, h2, h3, h4, h5, h6 {
+	.font-size(12px);
+}
+p {
+	.font-size(10px);
+}
+.single-capital_improvement .ci_text .gen-data p span {
+	.width(150px);
+}
+.single-capital_improvement .ci_text ul li {
+	.font-size(10px);
+}
+.single-capital_improvement .ci_table ul li  {
+	.font-size(8px);
+}
+
+// hide content people who print don't need to see
+.mobile-menu,
+.search-mobile,
+.sidebar,
+.widget-area,
+.page-navigation,
+.post-navigation,
+.wp-prev-next,
+.respond-form,
+.comment-respond,
+.site-footer,
+nav {
+	display: none;
+}
+
+.site-branding {
+	display: none;
+}
+.QRprintonly {
+	display:none !important;	
+}
+
+.single-capital_improvement {
+	.ci_table {
+		div ul:nth-child(odd){
+			background: #ccc !important;
+		}
+		div ul:nth-child(even){
+			background: #eee !important;
+		}
+	}
+}	

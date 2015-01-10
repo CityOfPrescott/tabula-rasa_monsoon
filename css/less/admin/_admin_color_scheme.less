@@ -1,6 +1,6 @@
 @import "_admin_color_scheme_variables.less";
 @import "_admin_color_scheme_mixins.less";
- 
+  
 html { 
 	background: @body-background;
 }
@@ -23,7 +23,7 @@ div.dashboard-widget-submit input:hover,
 .subsubsub a.current:hover,
 .ui-tabs-nav a:hover {
 	color: @link-focus;
-}
+} 
 
 
 /* Forms */
@@ -36,7 +36,7 @@ input[type=radio]:checked:before {
 .wp-core-ui input[type="reset"]:hover,
 .wp-core-ui input[type="reset"]:active {
 	color: @link-focus;
-}
+} 
 
 /* Core UI */
 
@@ -60,7 +60,7 @@ input[type=radio]:checked:before {
 	.wp-ui-highlight {
 		color: @menu-highlight-text;
 		background-color: @menu-highlight-background;
-	}
+	} 
 	.wp-ui-text-highlight {
 		color: @menu-highlight-background;
 	}
@@ -167,7 +167,7 @@ strong .post-com-count span {
 }
 
 #adminmenu .wp-submenu .wp-submenu-head {
-	color: @menu-submenu-text;
+	color: #444444;
 }
 
 #adminmenu .wp-submenu a,
@@ -178,7 +178,7 @@ strong .post-com-count span {
 	color: @menu-submenu-text;
 
 	&:focus, &:hover {
-		color: @menu-submenu-focus-text;
+		color: #444444;
 	}
 }
 
@@ -191,7 +191,7 @@ strong .post-com-count span {
 	color: @menu-submenu-current-text;
 
 	&:hover, &:focus {
-		color: @menu-submenu-focus-text;
+		color: #444444;
 	}
 }
 
@@ -204,12 +204,12 @@ ul#adminmenu > li.current > a.current:after {
 #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu,
 #adminmenu li.wp-has-current-submenu .wp-submenu .wp-submenu-head,
 .folded #adminmenu li.current.menu-top {
-	color: @menu-current-text;
-	background: @menu-current-background;
+	color: #ffffff;
+	background: lighten(@menu-current-background, 9%);
 }
 
 #adminmenu li.wp-has-current-submenu div.wp-menu-image:before {
-	color: @menu-current-icon;
+	color: #ffffff;
 }
 
 
@@ -401,6 +401,7 @@ ul#adminmenu > li.current > a.current:after {
 	background: @module;
 	h3 {
 		background: @module-header;
+		color: @prim-color;
 	}
 	.tabs {
 		background-color: @module-tabs !important;
