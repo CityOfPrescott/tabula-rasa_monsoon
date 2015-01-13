@@ -68,14 +68,6 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 	echo mdy( 'month', 'day', 'year', $mval, $dval, $yval, 'style="visibility:hidden;"' );
 }
 ?>
-<?php
-	global $current_user;
-	get_currentuserinfo();
-	
-	//echo $cuent_user;
-	print_r($current_user);
-?>
-
 		<div class="type">
 			<h2>Project Type</h2>
 			<input type="text" id="capital-improvements_type" name="capital-improvements_type" value="<?php echo get_post_meta( get_the_ID(), 'capital-improvements_type', true ); ?>">
@@ -121,64 +113,70 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 								?>
 					<ul id="<?php echo $tax_name; ?>checklist" data-wp-lists="list:<?php echo $tax_name; ?>" class="categorychecklist form-no-clear">
 						<?php 
-						$userid = get_current_user_id();
-						//echo $userid;
-						$test = wp_get_object_terms( $userid, 'departments');
-						//print_r($test);
-						foreach ( $test as $value ) {
-							if ( $value->parent == 0 ) {
-								$depts_parents_array[] = $value->term_id;
-							} else {
-								$depts_parents_array[] = $value->parent;
-							}
-						}
-						$depts_parents_array = array_unique($depts_parents_array);
-						//print_r($depts_parents_array);
-						//print_r($depts_children_array);
 						
 						$taxonomy = 'departments';
-						$post_taxs = wp_get_post_terms( get_the_ID(), 'departments');
-						foreach ($post_taxs as $post_tax) {
-							$post_tax_array[] = $post_tax->term_id;
-						}						
-						foreach( $depts_parents_array as $dept ) {
-							$tax_id = $dept;
-							$tax_name = get_term( $tax_id, $taxonomy );
-							$tax_name = $tax_name->name;
-							//$test = wp_get_post_terms( 11976, 'departments');
-							//print_r( $test );
-							if ( in_array($tax_id, $post_tax_array) ) {
-								$checked = ' checked';
-							} else {
-								$checked = '';
+						if ( current_user_can('delete_others_capital_improvements') ) {
+							wp_terms_checklist( get_the_ID(), array( 'taxonomy' => $taxonomy ) );
+						} else {
+							$userid = get_current_user_id();
+							//echo $userid;
+							$test = wp_get_object_terms( $userid, 'departments');
+							//print_r($test);
+							foreach ( $test as $value ) {
+								if ( $value->parent == 0 ) {
+									$depts_parents_array[] = $value->term_id;
+								} else {
+									$depts_parents_array[] = $value->parent;
+								}
 							}
-							$test = get_term( $tax_id, $taxonomy );
-							$test->term_id;
-							echo '<li><label class="selectit"><input value="' .$tax_id . '" type="checkbox" name="departments[]" id="in-departments-' . $tax_id . '"' . $checked . '> ' . $tax_name . '</label><ul>';
-
-						//$tax_ids = array(257);
-
-							$args = array(
-								//'include' => 257,
-								'parent' => $tax_id,
-								'hide_empty' => 0,
-								//'hierarchical' => false
-							);
-					$categories = get_terms( $taxonomy, $args );
-							foreach( $categories as $key ) {
-								$cat_id = $key->term_id;
-							if ( in_array($cat_id, $post_tax_array) ) {
-								$checked = ' checked';
-							} else {
-								$checked = '';
+							$depts_parents_array = array_unique($depts_parents_array);
+							//print_r($depts_parents_array);
+							//print_r($depts_children_array);
+							
+							$post_taxs = wp_get_post_terms( get_the_ID(), 'departments');
+							$post_tax_array = array();
+							foreach ($post_taxs as $post_tax) {
+								$post_tax_array[] = $post_tax->term_id;
 							}						
-								//$test = get_term( $cat_id, $taxonomy );
-								//echo $test;
-								$cat_name = $key->name;
-								echo '<li id="departments-' . $cat_id . '"><label class="selectit"><input value="' .$cat_id . '" type="checkbox" name="departments[]" id="in-departments-' . $cat_id . '"' . $checked . '> ' . $cat_name . '</label></li>';
-							}
-								echo '</ul>';
-						}						
+							foreach( $depts_parents_array as $dept ) {
+								$tax_id = $dept;
+								$tax_name = get_term( $tax_id, $taxonomy );
+								$tax_name = $tax_name->name;
+								//$test = wp_get_post_terms( 11976, 'departments');
+								//print_r( $test );
+								if ( in_array($tax_id, $post_tax_array) ) {
+									$checked = ' checked';
+								} else {
+									$checked = '';
+								}
+								$test = get_term( $tax_id, $taxonomy );
+								$test->term_id;
+								echo '<li><label class="selectit"><input value="' .$tax_id . '" type="checkbox" name="tax_input[departments][]" id="in-departments-' . $tax_id . '"' . $checked . '> ' . $tax_name . '</label><ul>';
+
+							//$tax_ids = array(257);
+
+								$args = array(
+									//'include' => 257,
+									'parent' => $tax_id,
+									'hide_empty' => 0,
+									//'hierarchical' => false
+								);
+						$categories = get_terms( $taxonomy, $args );
+								foreach( $categories as $key ) {
+									$cat_id = $key->term_id;
+								if ( in_array($cat_id, $post_tax_array) ) {
+									$checked = ' checked';
+								} else {
+									$checked = '';
+								}						
+									//$test = get_term( $cat_id, $taxonomy );
+									//echo $test;
+									$cat_name = $key->name;
+									echo '<li id="departments-' . $cat_id . '"><label class="selectit"><input value="' .$cat_id . '" type="checkbox" name="tax_input[departments][]" id="in-departments-' . $cat_id . '"' . $checked . '> ' . $cat_name . '</label></li>';
+								}
+									echo '</ul>';
+							}	
+						}
 						?>
 					</ul>
 				</div>

@@ -101,10 +101,10 @@ function remove_meta_boxes() {
   remove_meta_box('content-permissions-meta-box','capital_improvement','advanced');
   remove_meta_box('post-stylesheets','capital_improvement','side');
   remove_meta_box('hybrid-core-post-template','capital_improvement','side');
+	remove_meta_box('departmentsdiv','capital_improvement','side');
 	
 	if (!current_user_can('delete_others_capital_improvements')) {
 		remove_meta_box('authordiv','capital_improvement','normal');
-		remove_meta_box('departmentsdiv','capital_improvement','side');
 	}
 }
 add_action('do_meta_boxes','remove_meta_boxes');
@@ -157,23 +157,12 @@ add_action( 'pre_get_posts','only_same_departments_allowed' );
 
 // Save departments section on capital improvements page_template_dropdown
 function save_departments_capital_improvements( $post_id ) {
-	$tax = get_taxonomy( 'departments' );
-
-	/* Make sure the current user can edit the user and assign terms before proceeding. 
-	if ( !current_post_can( 'edit_departments', $post_id ) && current_post_can( $tax->cap->assign_terms ) )
-		return false;
-	*/
-	$terms = $_POST['departments'];
-	
-	//$file = '../wp-content/themes/tabula-rasa_monsoon/inc/cap-improvements/newfile.txt';
-	//$txt = '';
-	
-	foreach ($terms as $value ) {
+	$terms = $_POST['tax_input'];
+	foreach ($terms['departments'] as $value ) {
 		$departments[] = (int)$value;
 	}
 	wp_set_object_terms( $post_id, $departments, 'departments');
 	clean_object_term_cache( $post_id, 'departments' );
-	//file_put_contents($file, $txt);
 }
-add_action( 'save_post', 'save_departments_capital_improvements' );
+//add_action( 'save_post_capital-improvements', 'save_departments_capital_improvements' );
 ?>
