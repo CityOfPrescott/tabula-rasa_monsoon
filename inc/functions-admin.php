@@ -241,38 +241,52 @@ add_filter('login_headertitle', 'tr_login_title');
 LOGIN REDIRECT 
 **************************************************************/
 // Redirect user from admin area except certain roles
-function only_admins_login_area( $redirect_to, $request, $user ) {
+function my_login_redirect( $redirect_to, $request, $user ) {
+	//is there a user to check?
 	global $user;
 	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
-		//check for admins
-		if ( in_array( 'administrator', $user->roles ) ) {
-			// Redirect to default admin area
-			return $redirect_to;
+		if ( in_array( 'capital-improvements', $user->roles ) ) {
+			if (
+				$user->user_login == 'alison.zelms' ||
+				$user->user_login == 'amy.bonney' ||
+				$user->user_login == 'nate.keegan' ||
+				$user->user_login == 'peggy.fordskibbe' ||
+				$user->user_login == 'shawni.mcatee' ||
+				$user->user_login == 'catherine.sebold'
+			) {
+				return $redirect_to;
+			} else {
+				return admin_url( '/edit.php?post_type=capital_improvement' );
+				//return 'www.google.com';
+			}
 		}
+		return $redirect_to;
+	} else {
+		return $redirect_to;
 	}
-	return home_url();
 }
-//add_filter( 'login_redirect', 'only_admins_login_area', 10, 3 );
+add_filter( 'login_redirect', 'my_login_redirect', 10, 3 );
 
 // Remove Access to wp-admin from certain roles
 function redirect_user_on_role() {
 	global $current_user;
 	get_currentuserinfo();
 
-	//If login user role is Subscriber
-	if ($current_user->user_level == 0)  {
-		wp_redirect( home_url() ); exit;
-	}
-
-	//If login user role is Contributor
-	if ($current_user->user_level > 1) {
-		wp_redirect( home_url() ); exit;
-	}
-
-	//If login user role is Editor
-	if ($current_user->user_level > 8) {
-		wp_redirect( home_url() ); exit;
-	}
+		if ( in_array( 'capital-improvements', $current_user->roles ) ) {
+			if (
+				$current_user->user_login == alison.zelms ||
+				$current_user->user_login == amy.bonney ||
+				$current_user->user_login == catherine.sebold ||
+				$current_user->user_login == nate.keegan ||
+				$current_user->user_login == peggy.fordskibbe ||
+				$current_user->user_login == shawni.mcatee
+			) {
+				return admin_url();
+			} else {
+				//return admin_url( '/edit.php?post_type=capital_improvement' );
+				return 'www.google.com';
+			}
+		}		
 }
 //add_action('admin_init', 'redirect_user_on_role');
 

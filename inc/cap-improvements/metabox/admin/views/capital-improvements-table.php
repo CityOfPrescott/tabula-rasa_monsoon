@@ -68,6 +68,14 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 	echo mdy( 'month', 'day', 'year', $mval, $dval, $yval, 'style="visibility:hidden;"' );
 }
 ?>
+<?php
+	global $current_user;
+	get_currentuserinfo();
+	
+	//echo $cuent_user;
+	print_r($current_user);
+?>
+
 		<div class="type">
 			<h2>Project Type</h2>
 			<input type="text" id="capital-improvements_type" name="capital-improvements_type" value="<?php echo get_post_meta( get_the_ID(), 'capital-improvements_type', true ); ?>">
