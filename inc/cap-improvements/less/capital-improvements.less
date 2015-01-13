@@ -13,6 +13,9 @@
 	
 .singular-capital_improvement, 
 .single-capital_improvement {
+	h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+		font-family: "Open Sans Condensed",Helvetica,Arial,sans-serif;
+	}
 	.content-area {
 		.column(12);
 	}
@@ -58,19 +61,22 @@
 		}		
 		ul { 
 			padding: 0; 
-			margin: 0;  
+			margin: 0;
+			clear: both;
+			overflow: hidden;
 			 
 			li {
-				display: inline-block; 
+				display: block; 
+				float: left;
 				.font-size(10px); 
-				width: 8%;
+				width: 8.25%;
 				text-align: center;
 				vertical-align: middle;
   
-				&:first-child {
-					text-align: left; 
-					.padding-left(2px); 
-				}				
+				//&:first-child {
+				//	text-align: left; 
+				//	.padding-left(2px); 
+				//}				
 			}
 			&.table-header li {
 				text-align: center;

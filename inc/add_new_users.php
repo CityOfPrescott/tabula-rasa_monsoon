@@ -1,0 +1,7 @@
+<?php
+$new_users = array( 'charles.andrews', 'martha.baden', 'joe.baynes', 'debra.bellingham', 'joel.berman', 'jonathan.brambila', 'wendy.bridges', 'lori.burkeen', 'jeff.burt', 'melissa.busby', 'karen.cannizzaro', 'irving.carr', 'mike.carr', 'crista.clevenger', 'marsha.collier', 'casey.cook', 'john.cox', 'patti.crouse', 'dana.delong', 'suzanne.derryberry', 'don.devendorf', 'brian.dever', 'craig.dotseth', 'dave.essex', 'mic.fenech', 'roy.fisher', 'michael.fleming', 'melissa.fousek', 'becky.garvin', 'rich.gill', 'leslie.graser', 'shannon.gray', 'scott.gregorio', 'tom.guice', 'ted.hanneman', 'henry.hash', 'clayton.heath', 'jeff.hemphill', 'rick.hormann', 'mary.jacobsen',  'corey.kasun', 'bobbie.king', 'eric.kriwer', 'carla.lambert', 'erika.laster', 'tim.legler', 'dennis.light', 'ralph.lucas', 'ian.mattingly', 'scott.mcclinton', 'craig.mcconnell', 'michelle.medina', 'stephanie.miller', 'jerald.monahan', 'denise.moore', 'cory.moser', 'teresa.ogle', 'jon.paladini', 'kevin.perlak', 'randy.pluimer', 'don.prince', 'ted.ralston', 'andrew.reinhardt', 'linda.ripley', 'roger.saft', 'kelly.sammeli', 'nicole.schneider', 'ben.scott', 'arthur.siegel', 'jason.small', 'eric.smith', 'dale.spiess', 'michelle.stacy', 'dorothy.strehle', 'jaimie.sventek', 'dave.szeszycki', 'mc.tennant', 'jerry.walsh', 'sarah.welch', 'darrell.willis', 'george.worley');
+foreach ( $new_users as $new_user) {
+	$new_email = $new_user . '@prescott-az.gov';
+	wp_create_user( $new_user,'nada', $new_email );
+}
+?>
