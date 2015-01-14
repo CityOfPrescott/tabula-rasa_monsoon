@@ -27,7 +27,11 @@ get_header(); ?>
 			}
 			?>
 		</ul>
-		<p><strong>Rating: </strong><?php $data = get_post_meta( get_the_ID(), 'capital-improvements_rating', true ); echo $data[0]; ?> of <?php echo $data[1]; ?></p>
+		<?php
+		$data = get_post_meta( get_the_ID(), 'capital-improvements_rating', true );
+		if ( $data) {			?>
+		<p><strong>Rating: </strong><?php echo $data[0]; ?> of <?php echo $data[1]; ?></p>
+				<?php } ?>
 	</div>
 	<div class="description">
 		<h2>Project/Equipment Description</h2>
