@@ -15,7 +15,7 @@ get_header(); ?>
 		<h2>General Project Data</h2>
 		<p><span>Project/Equipment Title:</span><?php echo the_title(); ?></p>
 		<p><span>Project Type:</span><?php echo get_post_meta( get_the_ID(), 'capital-improvements_type', true ); ?></p>
-		<p><span>Department/Division:</span><?php $term = get_terms('departments'); echo $term[0]->name ?></p>
+		<p><span>Department/Division:</span><?php $term = wp_get_post_terms( get_the_ID(), 'departments'); echo $term[0]->name ?></p>
 	</div>
 	<div class="account_num">
 		<h2>Project Account No.:</h2>
@@ -26,8 +26,8 @@ get_header(); ?>
 				echo '<li>' . $value . '</li>';
 			}
 			?>
-		
 		</ul>
+		<p><strong>Rating: </strong><?php $data = get_post_meta( get_the_ID(), 'capital-improvements_rating', true ); echo $data[0]; ?> of <?php echo $data[1]; ?></p>
 	</div>
 	<div class="description">
 		<h2>Project/Equipment Description</h2>

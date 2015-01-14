@@ -83,12 +83,14 @@ add_action( 'manage_capital_improvement_posts_custom_column', 'add_column_conten
 // Only display edit options to admins and managers
 function my_action_row($actions, $post){
 	global $authordata;
-	if( is_admin() AND $post->post_type == 'capital_improvement' AND !current_user_can('delete_others_capital_improvements') ) {
-		if ( date('Y-m-d') > get_post_meta( $post->ID, 'capital-improvements_date-exp', true ) ) {
-		unset($actions['edit']);
-		unset($actions['inline hide-if-no-js']);
-		unset($actions['trash']);
-		}
+	if( is_admin() AND $post->post_type == 'capital_improvement' ) {
+		unset($actions['inline hide-if-no-js']);	
+		if ( !current_user_can('delete_others_capital_improvements') ) {
+			if ( date('Y-m-d') > get_post_meta( $post->ID, 'capital-improvements_date-exp', true ) ) {
+				unset($actions['edit']);
+				unset($actions['trash']);
+			}
+		}	
 	}
 	return $actions;
 }

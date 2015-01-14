@@ -66,7 +66,7 @@ class Capital_Improvements_Meta_Box {
 				$this->delete_post_meta( $post_id, 'capital-improvements_date-exp');
 			}
 		
-		$text_boxes = array('capital-improvements_type', 'capital-improvements_description', 'capital-improvements_budget-impact', 'capital-improvements_justification', 'capital-improvements_goal-priority');
+		$text_boxes = array('capital-improvements_type', 'capital-improvements_rating','capital-improvements_description', 'capital-improvements_budget-impact', 'capital-improvements_justification', 'capital-improvements_goal-priority');
 		foreach ( $text_boxes as $text_box ) {
 			if ( $this->value_exists( $text_box ) ) {
 				$this->update_post_meta(

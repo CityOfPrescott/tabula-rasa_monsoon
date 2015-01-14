@@ -71,7 +71,7 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 		<div class="type">
 			<h2>Project Type</h2>
 			<input type="text" id="capital-improvements_type" name="capital-improvements_type" value="<?php echo get_post_meta( get_the_ID(), 'capital-improvements_type', true ); ?>">
-		</div>
+		</div>	
 		<div class="number">
 			<h2>Project Account Number</h2>
 				<ul>
@@ -102,7 +102,11 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 				}
 				?>
 				</ul>
-		</div>		
+		</div>
+		<div class="rating">
+			<h2>Project Rating</h2>		
+			<input type="text" name="capital-improvements_rating[]" value="<?php $data = get_post_meta( get_the_ID(), 'capital-improvements_rating', true ); echo $data[0]; ?>"  placeholder="Enter Number Here"> of <input type="text" name="capital-improvements_rating[]" value="<?php echo $data[1]; ?>"  placeholder="Enter Number Here">
+		</div>			
 		<div class="department">
 			<h2>Project Department</h2>
 			<div id="taxonomy-<?php echo $tax_name; ?>" class="categorydiv">
