@@ -28,27 +28,49 @@ get_header(); ?>
 			?>
 		</ul>
 		<?php
-		$data = get_post_meta( get_the_ID(), 'capital-improvements_rating', true );
+		$data = get_post_meta( get_the_ID(), 'capital-improvements_ranking', true );
 		if ( $data) {			?>
-		<p><strong>Rating: </strong><?php echo $data[0]; ?> of <?php echo $data[1]; ?></p>
+		<p><strong>Ranking: </strong><?php echo $data[0]; ?> of <?php echo $data[1]; ?></p>
 				<?php } ?>
 	</div>
+	<?php
+	$description = get_post_meta( get_the_ID(), 'capital-improvements_description', true );
+	if ( $description ) {
+	?>
 	<div class="description">
 		<h2>Project/Equipment Description</h2>
-		<p><?php echo get_post_meta( get_the_ID(), 'capital-improvements_description', true ); ?></p>
+		<p><?php echo $description; ?></p>
 	</div>
+	<?php
+	}
+	$budget_impact = get_post_meta( get_the_ID(), 'capital-improvements_budget-impact', true );
+	if ( $budget_impact ) {
+	?>	
 	<div class="budget-impact">
 		<h2>Operating Budget Impact</h2>
-		<p><?php echo get_post_meta( get_the_ID(), 'capital-improvements_budget-impact', true ); ?></p>
+		<p><?php echo $budget_impact; ?></p>
 	</div>
+	<?php
+	}
+	$justification = get_post_meta( get_the_ID(), 'capital-improvements_justification', true ); 
+	if ( $justification ) {
+	?>		
 	<div class="justification">
 		<h2>Justification (Benefit to Community or Legal Requirement)</h2>
-		<p><?php echo get_post_meta( get_the_ID(), 'capital-improvements_justification', true ); ?></p>	
+		<p><?php echo $justification; ?></p>	
 	</div>
+	<?php
+	}
+	$goal = get_post_meta( get_the_ID(), 'capital-improvements_goal-priority', true );
+	if ( $goal ) {
+	?>	
 	<div class="goal">
 		<h2>Council Goal or Priority Level</h2>
-		<p><?php echo get_post_meta( get_the_ID(), 'capital-improvements_goal-priority', true ); ?></p>		
-	</div>	
+		<p><?php echo $goal; ?></p>		
+	</div>
+	<?php
+	}
+	?>
 </section>
 <section class="ci_table">
 	<?php
@@ -75,7 +97,7 @@ get_header(); ?>
 	// All table combines into one array
 	$capital_improvement_tables = array ( 'expenditure' => array ( 'Design/Arch/Eng' => $design, 'Land (or Row) Purchase' => $land, 'Construction' => $construction, 'Equipment Purchase' => $equipment, 'Other' => $other ),
 	'funding' => array( 'One' => $one, 'Two' => $two, 'Three' => $three, 'Four' => $four, 'Five' => $five ),
-	'operating' => array( 'Personal Service' => $personal, 'Non-Personal' => $non_personal, 'Capital' => $capital )
+	'operating' => array( 'Personnel Service' => $personal, 'Non-Personnel' => $non_personal, 'Capital' => $capital )
 	);
 
 	foreach ( $capital_improvement_tables as $table => $table_info) {

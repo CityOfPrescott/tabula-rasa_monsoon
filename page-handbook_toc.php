@@ -5,6 +5,7 @@
  */
 
 get_header(); ?>
+
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 	<div class="hfeed content">
@@ -24,13 +25,15 @@ while ( $loop->have_posts() ) : $loop->the_post();
 <?php
 	$args = array(
 	'post_type' => 'attachment',
-	'numberposts' => null,
+	'posts_per_page' => -1,
 	'post_status' => null,
 	'orderby' => 'title',
 	'order' => 'ASC',
 	'post_parent' => $post->ID
 	); 
+	//echo $post->ID;
 	$attachments = get_posts($args);
+	//print_r($attachments);
 	if ($attachments) {
 		foreach ($attachments as $attachment) {
 			echo '<li>';
@@ -44,11 +47,8 @@ while ( $loop->have_posts() ) : $loop->the_post();
 <?php	
 endwhile;
 ?>
-		<?php do_atomic( 'after_content' ); // After content hook ?>
-
-	</div><!-- .content .hfeed -->
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php get_sidebar(); ?>
+<?php get_sidebar();?>
 <?php get_footer(); ?>

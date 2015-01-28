@@ -316,3 +316,103 @@ blockquote {
 .results + .asbuilt_results {
 	border-top: 1px solid #ccc;
 }
+
+/** PRCC MANUAL
+**********************************************************/
+body.page-template-prcc_handbook_toc,
+body.single-prcc_manual {
+	//font-size: 85%!important;
+	.content-area {
+		width: 100%!important;
+	}
+	h1 {
+		text-align: center;
+	}
+	h3 {
+		font-family: Verdana, Geneva, Tahoma, sans-serif;
+	}	
+}
+.single-prcc_manual {
+	.navigation {
+		clear: both;
+	}
+
+	.header_top {
+		.toc_link {
+			text-align: left;
+			margin: 0px;
+			display: inline;
+			float: left;
+		}
+		#searchform {
+			display: inline;
+			float: right;
+		}	
+	}
+	.handbook_header {
+		clear: both;
+		
+		div {
+			width: 33%;
+			text-align: center;
+			float: left;
+		}
+		.prcc_logo {
+			
+			img {
+				//float: left;
+				width: 120px;
+			}
+		}
+		p {
+			//padding: 15px 0 0 100px;
+			//float: left;
+			//text-align: center;
+			font-weight: bold;
+			//width: 300px;
+			//width: 33%;
+		}	
+		p.manual_title {
+			text-align: right;
+			float: right;
+			//width: 350px;
+			//width: 33%;
+			padding: 15px 0 0 0;
+		}		
+	}	
+	h1 { padding: 10px 0; }
+	h2 { background: #ddd; font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 5px; }
+	ol { list-style-type: upper-alpha; }
+	ol ol { list-style-type: decimal; }
+	ol ol ol { list-style-type: lower-alpha; }
+	ol ol ol ol { list-style-type: decimal; }
+	ol ol ol ol ol{ list-style-type: lower-alpha; }
+	ol ol ol ol ol ol{ list-style-type: decimal; }
+	th{ text-align: center; padding: 0px 10px}
+	td{ text-align: center; border: 1px solid #CCC; }
+	#container { background: none; }
+	.handbook_header+table tbody tr:hover {
+		background: none;
+	}
+}
+.single-prcc_manual-8588 td+td {text-align: left; padding-left: 10px;}
+
+/** Open Enrollment Pages
+**********************************************************/
+.category-benefits-2014-to-2015 {
+	.hr_benefits {
+		clear: both;
+		
+		.entry-thumbnail {
+			.margin-right(10px);
+			.margin-top(20px);
+			display: inline;
+			float: left;
+		}
+		.entry-title {
+			display: inline-block;
+			margin: 0;
+			.margin-top(20px);
+		}
+	}
+}

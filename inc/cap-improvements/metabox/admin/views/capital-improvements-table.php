@@ -103,9 +103,9 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 				?>
 				</ul>
 		</div>
-		<div class="rating">
-			<h2>Project Rating</h2>		
-			<input type="text" name="capital-improvements_rating[]" value="<?php $data = get_post_meta( get_the_ID(), 'capital-improvements_rating', true ); echo $data[0]; ?>"  placeholder="Enter Number Here"> of <input type="text" name="capital-improvements_rating[]" value="<?php echo $data[1]; ?>"  placeholder="Enter Number Here">
+		<div class="ranking">
+			<h2>Project Ranking</h2>		
+			<input type="text" name="capital-improvements_ranking[]" value="<?php $data = get_post_meta( get_the_ID(), 'capital-improvements_ranking', true ); echo $data[0]; ?>"  placeholder="Enter Number Here"> of <input type="text" name="capital-improvements_ranking[]" value="<?php echo $data[1]; ?>"  placeholder="Enter Number Here">
 		</div>			
 		<div class="department">
 			<h2>Project Department</h2>
@@ -228,7 +228,7 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 	<?php
 	$capital_improvement_tables = array ( 'expenditure' => array ( 'Design/Arch/Eng' => 'design', 'Land (or Row) Purchase' => 'land', 'Construction' => 'construction', 'Equipment Purchase' => 'equipment', 'Other' => 'other' ),
 	'funding' => array( 'One' => 'one', 'Two' => 'two', 'Three' => 'three', 'Four' => 'four', 'Five' => 'five' ),
-	'operating' => array( 'Personal Service' => 'personal', 'Non-Personal' => 'non-personal', 'Capital' => 'capital' )
+	'operating' => array( 'Personnel Service' => 'personal', 'Non-Personnel' => 'non-personal', 'Capital' => 'capital' )
 	);
 
 	//$ex_table_array = array( 'Design/Arch/Eng' => 'design', 'Land (or Row) Purchase' => 'land', 'Construction' => 'construction', 'Equipment Purchase' => 'equipment', 'Other' => 'other' );
@@ -311,6 +311,7 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 					if ( $i == 2 ) { $data2 = $data; }
 					if ( $i == 3 ) { 
 						$carryover = $data1 - $data2; 
+						if ( $carryover < 0 ) { $carryover = 0; }
 						$data_total_total[3][] = $carryover;
 					}
 					if ( $i == 4 ) { $data4 = $data; }

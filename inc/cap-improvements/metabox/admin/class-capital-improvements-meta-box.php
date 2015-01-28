@@ -66,7 +66,7 @@ class Capital_Improvements_Meta_Box {
 				$this->delete_post_meta( $post_id, 'capital-improvements_date-exp');
 			}
 		
-		$text_boxes = array('capital-improvements_type', 'capital-improvements_rating','capital-improvements_description', 'capital-improvements_budget-impact', 'capital-improvements_justification', 'capital-improvements_goal-priority');
+		$text_boxes = array('capital-improvements_type', 'capital-improvements_ranking','capital-improvements_description', 'capital-improvements_budget-impact', 'capital-improvements_justification', 'capital-improvements_goal-priority');
 		foreach ( $text_boxes as $text_box ) {
 			if ( $this->value_exists( $text_box ) ) {
 				$this->update_post_meta(
@@ -163,7 +163,7 @@ class Capital_Improvements_Meta_Box {
 	
 	// Verifies that the post type that's being saved is actually a post (versus a page or another custom post type.
 	private function is_valid_post_type() {
-		return ! empty( $_POST['post_type'] ) && 'post' == $_POST['post_type'];
+		return ! empty( $_POST['post_type'] ) && 'capital_improvement' == $_POST['post_type'];
 	}
 	
 	// Determines whether or not the current user has the ability to save meta data associated with this post.
@@ -173,8 +173,8 @@ class Capital_Improvements_Meta_Box {
 		$is_valid_nonce = ( isset( $_POST[ $nonce_action ] ) && wp_verify_nonce( $_POST[ $nonce_action ], $nonce_id ) );
  
 		// Return true if the user is able to save; otherwise, false.
-		//return ! ( $is_autosave || $is_revision ) && $this->is_valid_post_type() && $is_valid_nonce;
-		return true;
+		return ! ( $is_autosave || $is_revision ) && $this->is_valid_post_type() && $is_valid_nonce;
+		//return true;
 	}				
 }
 ?>
