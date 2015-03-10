@@ -143,15 +143,29 @@ return $allcaps;
 }
 add_filter( 'user_has_cap', 'restrict_editing_old_posts', 10, 3 );
 
-// List Page - Only display items if the user is in eth same department of the item
+// List Page - Only display items if the user is in the same department of the item
 function only_same_departments_allowed ( $query ) {
 	if( is_admin() AND $query->query['post_type'] == 'capital_improvement' AND !current_user_can('delete_others_capital_improvements' ) ) {
 		global $current_user;
 		get_currentuserinfo();
 		$user_id = $current_user->ID;
-		$depts = wp_get_object_terms( $user_id, 'departments' );
-		$user_dept = $depts[0]->slug;
-		$query->set( 'departments', $user_dept );
+		$args = array('fields' => 'ids');
+		$depts = wp_get_object_terms( $user_id, 'departments', $args );
+		
+		//print_r( $depts);
+		
+		$taxquery = array(
+        array(
+            'taxonomy' => 'departments',
+            //'field' => 'id',
+            'terms' => $depts,
+            //'operator'=> 'OR'
+        )
+    );
+
+    $query->set( 'tax_query', $taxquery );
+    return $query;
+		
 	} else {
 	}
 }

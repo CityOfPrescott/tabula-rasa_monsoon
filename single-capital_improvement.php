@@ -39,7 +39,7 @@ get_header(); ?>
 	?>
 	<div class="description">
 		<h2>Project/Equipment Description</h2>
-		<p><?php echo $description; ?></p>
+		<p><?php echo wpautop($description); ?></p>
 	</div>
 	<?php
 	}
@@ -48,7 +48,7 @@ get_header(); ?>
 	?>	
 	<div class="budget-impact">
 		<h2>Operating Budget Impact</h2>
-		<p><?php echo $budget_impact; ?></p>
+		<p><?php echo wpautop($budget_impact); ?></p>
 	</div>
 	<?php
 	}
@@ -57,7 +57,7 @@ get_header(); ?>
 	?>		
 	<div class="justification">
 		<h2>Justification (Benefit to Community or Legal Requirement)</h2>
-		<p><?php echo $justification; ?></p>	
+		<p><?php echo wpautop($justification); ?></p>	
 	</div>
 	<?php
 	}
@@ -66,7 +66,7 @@ get_header(); ?>
 	?>	
 	<div class="goal">
 		<h2>Council Goal or Priority Level</h2>
-		<p><?php echo $goal; ?></p>		
+		<p><?php echo wpautop($goal); ?></p>		
 	</div>
 	<?php
 	}
@@ -136,10 +136,10 @@ get_header(); ?>
 				<li>TOTAL</li>
 			</ul>	
 		<?php
-	$data_total = array();
 	$data_total_vert = array();
 	$total_total = array();				
 		foreach ( $table_info as $key => $value) {
+	$data_total = array();
 			$i = 0;
 			if ( !empty($value)) {
 				echo '<ul>';
@@ -178,7 +178,15 @@ get_header(); ?>
 					if ( $i == 1 ) { $data1 = $data; }
 					if ( $i == 2 ) { $data2 = $data; }
 					if ( $i == 3 ) { 
-						$carryover = $data1 - $data2; 
+						if ( $data1 == '' || $data2 == '' ) {
+							if ( $data1 == '' ) {
+								$carryover = $data2;
+							} else {
+								$carryover = $data1;
+							}
+						} else {
+							$carryover = $data1 - $data2; 							
+						}
 						$data_total_vert[3][] = $carryover;
 					}
 					if ( $i == 4 ) { $data4 = $data; }
@@ -194,14 +202,18 @@ get_header(); ?>
 					//Output list
 					if (! empty( $data ) ) {
 						if ( $i == 0 ) {
-							echo '<li>' . $data . '</li>';
+							echo '<li class="section-header">' . $data . '</li>';
 						} else {
 							echo '<li>' . number_format( $data ) . '</li>';
 						}
 					} elseif ( $i == 0 ) {
 						echo '<li>' . $data . '</li>';
 					} elseif ( $i == 3 ) {
-						echo '<li>' . number_format( $carryover ) .'</li>';
+						if ( $carryover == '' ) {
+							echo '<li>&nbsp;</li>';
+						} else {
+							echo '<li>' . number_format( $carryover ) .'</li>';
+						}
 					} elseif ( $i == 5 ) {
 						echo '<li>' . number_format( $budget_total ) .'</li>';
 					}	else {
@@ -210,6 +222,7 @@ get_header(); ?>
 					
 					$i++;					
 					}
+					//print_r($data_total);
 				$total_total[] = array_sum( $data_total );
 				echo '<li>' . number_format( array_sum( $data_total ) ) . '</li>';
 				echo '</ul>';
@@ -218,7 +231,7 @@ get_header(); ?>
 	}
 	?>
 		<ul>
-			<li>Total</li>
+			<li class="section-header">Total</li>
 			<?php
 			$i = 1;
 
@@ -245,4 +258,4 @@ get_header(); ?>
 </article><!-- #post-## -->
 
 
-<?php get_footer('prcc_manual');?>
+<?php get_footer();?>

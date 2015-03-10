@@ -59,7 +59,7 @@ if ($date_exp) {
 } else {
 	$yval = 2015;
 	$mval = 03;
-	$dval = 13;	
+	$dval = 15;	
 }
 if ( current_user_can('capital-improvements_manager') || current_user_can('administrator') )  {
 	echo '<h2>Due Date</h2>';
@@ -189,7 +189,7 @@ if ( current_user_can('capital-improvements_manager') || current_user_can('admin
 		<div class="description">
 			<h2>Project/Equipment Description</h2>
 			<?php
-				$args = array( 'media_buttons' => false, 'quicktags' => false );
+				$args = array( 'media_buttons' => false );
 				$content = get_post_meta( get_the_ID(), 'capital-improvements_description', true );;
 				$editor_id = 'capital-improvements_description';
 				//$editor_id = 'content';
