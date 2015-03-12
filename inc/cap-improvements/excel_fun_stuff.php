@@ -31,6 +31,7 @@
 						<th>Department/Division</th>
 						<th>Title</th>
 						<th>Project Type</th>
+						<th>Row Title</th>
 						<th>FY15 Budget</th>
 						<th>FY15 Est Ending</th>
 						<th>Carryover</th>
@@ -100,7 +101,7 @@
 							
 						foreach ( $table_info as $key => $value) {
 							$data_total = array();
-							$i = 1;
+							$i = 0;
 							if ( !empty($value)) {
 								$str .= '<tr>';
 								$data = '';
