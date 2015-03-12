@@ -181,4 +181,20 @@ function save_departments_capital_improvements( $post_id ) {
 	clean_object_term_cache( $post_id, 'departments' );
 }
 //add_action( 'save_post_capital-improvements', 'save_departments_capital_improvements' );
+
+/*************************************************************
+OPERATIONS PAGE 
+**************************************************************/
+/** Creates Operations page for users **/
+function cap_improve_menu() {
+	//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
+	//add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
+	add_submenu_page( 'edit.php?post_type=capital_improvement', '', 'Excel Fun Stuff', 'delete_others_capital_improvements', 'excel_fun_stuff', 'excel_fun_stuff' );
+}
+
+function excel_fun_stuff() {
+	include('excel_fun_stuff.php');
+}
+
+add_action( 'admin_menu', 'cap_improve_menu' );
 ?>

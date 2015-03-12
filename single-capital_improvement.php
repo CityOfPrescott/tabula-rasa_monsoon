@@ -15,7 +15,7 @@ get_header(); ?>
 		<h2>General Project Data</h2>
 		<p><span>Project/Equipment Title:</span><?php echo the_title(); ?></p>
 		<p><span>Project Type:</span><?php echo get_post_meta( get_the_ID(), 'capital-improvements_type', true ); ?></p>
-		<p><span>Department/Division:</span><?php $term = wp_get_post_terms( get_the_ID(), 'departments'); echo $term[0]->name ?></p>
+		<p><span>Department/Division:</span><?php $term = wp_get_post_terms( get_the_ID(), 'departments'); echo $term[0]->name; ?></p>
 	</div>
 	<div class="account_num">
 		<h2>Project Account No.:</h2>
@@ -178,14 +178,9 @@ get_header(); ?>
 					if ( $i == 1 ) { $data1 = $data; }
 					if ( $i == 2 ) { $data2 = $data; }
 					if ( $i == 3 ) { 
-						if ( $data1 == '' || $data2 == '' ) {
-							if ( $data1 == '' ) {
-								$carryover = $data2;
-							} else {
-								$carryover = $data1;
-							}
-						} else {
-							$carryover = $data1 - $data2; 							
+						$carryover = $data1 - $data2; 	
+						if ( $carryover <= 0 ) {
+							$carryover = '';
 						}
 						$data_total_vert[3][] = $carryover;
 					}
