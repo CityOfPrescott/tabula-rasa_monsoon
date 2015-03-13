@@ -1,18 +1,43 @@
 <?php
-/**
- * The Template for displaying all single posts.
- *
- * @package tabula-rasa
- */
+  ini_set('memory_limit', '256M');
+  ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+  $extensions = array('xls' => '.xls', 'xlsx' => '.xlsx');
+  $args = array (
+      'public'   => true
+  );
+  $output = 'objects';
+  $post_types = get_post_types($args, $output);
 
-get_header(); ?>
-<div class="break-here"></div>
+  if ( isset($_POST['Submit']) ) {
+		$post_type = 'capital_improvement';
+		$ext = 'xls';
+		$str = '';
+		
+		if ( is_multisite() && $network_admin ) {
+			$blog_info = get_blog_list(0, 'all');
+			foreach ($blog_info as $blog) {
+				switch_to_blog($blog['blog_id']);
+				include('loop.php');
+				restore_current_blog();
+			}
+		} else {
+
+			query_posts(array('posts_per_page' => -1, 'order'=>'DESC', 'post_type' => 'capital_improvement'));//-1 is for all posts
+			$str = '<table>';
+			if (have_posts()) {
+
+				
+				while (have_posts()) {
+					the_post();
+					global $post;
+					$post_id = $post->ID;
+?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 	</header><!-- .entry-header -->
 <section class="ci_text">
 	<div class="gen-data">
-		<h2 class="break-here">General Project Data</h2>
+		<h2>General Project Data</h2>
 		<p><span>Project/Equipment Title:</span><?php echo the_title(); ?></p>
 		<p><span>Project Type:</span><?php echo get_post_meta( get_the_ID(), 'capital-improvements_type', true ); ?></p>
 		<p><span>Department/Division:</span><?php $term = wp_get_post_terms( get_the_ID(), 'departments'); echo $term[0]->name; ?></p>
@@ -252,6 +277,45 @@ get_header(); ?>
 	<footer class="entry-footer">
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->
+<?php
+		print $str;//$str variable is used in loop.php
+		exit();
+				}
+			}
+		}
+  } else { // If Not submitted ?>
+	<?php
+    global $network_admin, $form_action;
+    $network_admin = 0;
+    $form_action = admin_url('edit.php?post_type=capital_improvement&page=excel_fun_stuff&noheader=true');	
+	?>	
+    <form name="export"  method="post" onsubmit="return validate_form();">
+      <div class="selection_criteria" >
+        <div class="popupmain" style="float:left;">
+          <div class="formfield">
+            <p class="row1">
+              <label>&nbsp;</label>
+              <em>
+                <input type="submit" class="button-primary" name="Submit" value="Download capital_improvement Data" />
+              </em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </form> <?php
+  } 
 
-
-<?php //get_footer();?>
+/*
+$str.= '
+	<tr>
+		<td>' . mb_convert_encoding($post_id, 'HTML-ENTITIES', 'UTF-8') . '</td>
+		<td>' . mb_convert_encoding(get_the_title(), 'HTML-ENTITIES', 'UTF-8') . '</td>
+		<td>' . mb_convert_encoding($name, 'HTML-ENTITIES', 'UTF-8') . '</td>
+		<td>' . mb_convert_encoding($type_name, 'HTML-ENTITIES', 'UTF-8') . '</td>
+		<td>' . mb_convert_encoding($sponsor, 'HTML-ENTITIES', 'UTF-8') . '</td>
+		<td>' . mb_convert_encoding($edited_on, 'HTML-ENTITIES', 'UTF-8') . '</td>
+		<td>' . mb_convert_encoding($edited_by, 'HTML-ENTITIES', 'UTF-8') . '</td>						
+	</tr>';
+	*/
+					
+?>

@@ -187,6 +187,9 @@ OPERATIONS PAGE
 **************************************************************/
 /** Creates Operations page for users **/
 function cap_improve_menu() {
+	global $submenu;
+	$url = home_url() . '/?post_type=capital_improvement';
+	$submenu['edit.php?post_type=capital_improvement'][] = array('Print', 'delete_others_capital_improvements', $url);
 	//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
 	//add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 	add_submenu_page( 'edit.php?post_type=capital_improvement', '', 'Excel Fun Stuff', 'delete_others_capital_improvements', 'excel_fun_stuff', 'excel_fun_stuff' );
@@ -195,6 +198,8 @@ function cap_improve_menu() {
 function excel_fun_stuff() {
 	include('excel_fun_stuff.php');
 }
-
+function print_cap_improve() {
+	//include( home_url() . '/?post_type=capital_improvement');
+}
 add_action( 'admin_menu', 'cap_improve_menu' );
 ?>

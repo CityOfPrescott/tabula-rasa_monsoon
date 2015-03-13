@@ -7,6 +7,20 @@ Sources:
 http://www.webdesignerdepot.com/2010/01/10-tips-for-better-print-style-sheets/
 http://www.smashingmagazine.com/2013/03/08/tips-and-tricks-for-print-style-sheets/
 ******************************************************************/
+
+/*==================================================================
+
+	=MIXINS
+	
+==================================================================*/
+	/** MIXINS-REMTOPX
+	******************************************************************/
+	@import "../../../css/less/mixins/_mixins-remtopx.less";
+	
+	/** MIXINS-GRID
+	******************************************************************/
+	@import "../../../css/less/mixins/_mixins-grid.less";
+	
 * {
 	background: transparent !important;
 	color: black !important;
@@ -63,12 +77,15 @@ h1, h2, h3, h4, h5, h6 {
 p {
 	.font-size(10px);
 }
+.post-type-archive-capital_improvement .ci_text .gen-data p span,
 .single-capital_improvement .ci_text .gen-data p span {
 	.width(150px);
 }
+.post-type-archive-capital_improvement .ci_text ul li,
 .single-capital_improvement .ci_text ul li {
 	.font-size(10px);
 }
+.post-type-archive-capital_improvement .ci_table ul li,
 .single-capital_improvement .ci_table ul li  {
 	.font-size(8px);
 }
@@ -95,6 +112,7 @@ nav {
 	display:none !important;	
 }
 
+.post-type-archive-capital_improvement,
 .single-capital_improvement {
 	.ci_table {
 		div ul:nth-child(odd){
@@ -105,8 +123,36 @@ nav {
 		}
 	}
 }	
+.post-type-archive-capital_improvement,
 .single-capital_improvement {
 	@page {
 		size:landscape;
 	}
 }	
+
+html, body, {
+	float: none;
+}
+
+.post-type-archive-capital_improvement, {
+	.page-title {
+		display: none;
+	}
+	float: none;
+	
+	.mm-page,
+	#page,
+	.site-content,
+	.content-area,
+	.site-main
+	{ float: none; }
+    article {
+			//display: block !important; 
+			//float: none !important; 
+			//break-before: always !important; 
+			page-break-after: always !important; 
+			//break-inside: avoid !important; 
+			//page-break-inside: avoid !important; 
+			border-bottom-style: none !important; 
+		}
+}
