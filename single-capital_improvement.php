@@ -115,9 +115,10 @@ get_header(); ?>
 		}
 		$goahead = '';
 		foreach ( $table_info as $key => $value) {
-			$goahead .= array_sum($value);
+			$goahead[] = array_sum( $value );
 		}
-		if ($goahead == 0 )  { continue; }
+		$goahead = array_sum( $goahead );
+		if (empty( $goahead ) )  { continue; }
 	?>
 		<div class="<?php echo $table_class; ?>">
 			<h4><?php echo $table_title; ?></h4>
