@@ -15,7 +15,18 @@ get_header(); ?>
 		<h2 class="break-here">General Project Data</h2>
 		<p><span>Project/Equipment Title:</span><?php echo the_title(); ?></p>
 		<p><span>Project Type:</span><?php echo get_post_meta( get_the_ID(), 'capital-improvements_type', true ); ?></p>
-		<p><span>Department/Division:</span><?php $term = wp_get_post_terms( get_the_ID(), 'departments'); echo $term[0]->name; ?></p>
+		<p><span>Department/Division:</span>
+			<?php 
+			$term = wp_get_post_terms( get_the_ID(), 'departments'); 
+			if ($term[0]->parent == 0) {
+				echo $term[0]->name;
+			} else {
+				$division = $term[0]->name;
+				$dept = get_term($term[0]->parent, 'departments');
+				echo $dept->name . '/' . $division;
+			}
+			?>
+		</p>
 	</div>
 	<div class="account_num">
 		<h2>Project Account No.:</h2>

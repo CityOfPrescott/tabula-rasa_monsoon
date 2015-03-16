@@ -193,13 +193,32 @@ function cap_improve_menu() {
 	//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
 	//add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 	add_submenu_page( 'edit.php?post_type=capital_improvement', '', 'Excel Fun Stuff', 'delete_others_capital_improvements', 'excel_fun_stuff', 'excel_fun_stuff' );
+	add_submenu_page( 'edit.php?post_type=capital_improvement', '', 'Print Select', 'delete_others_capital_improvements', 'print_select', 'print_select' );
 }
 
 function excel_fun_stuff() {
 	include('excel_fun_stuff.php');
 }
+function print_select() {
+	include('print_select.php');
+}
 function print_cap_improve() {
 	//include( home_url() . '/?post_type=capital_improvement');
 }
 add_action( 'admin_menu', 'cap_improve_menu' );
+
+function hwl_home_pagesize( $query ) {
+    if ( is_post_type_archive( 'capital_improvement' ) ) {
+			$categories = get_terms('departments', 'orderby=count&order=DESC&hide_empty=1');
+			foreach( $categories as $category ) {
+        // Display 50 posts for a custom post type called 'movie'
+        $query->set( 'posts_per_page', -1 );
+        //$query->set( 'meta_key', 'departments' );
+        $query->set( 'orderby', $category );
+        $query->set( 'order', 'ASC' );
+        return;
+			}
+    }
+}
+//add_action( 'pre_get_posts', 'hwl_home_pagesize', 1 );
 ?>
