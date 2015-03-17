@@ -21,45 +21,58 @@ get_header(); ?>
 			
 		<?php
 		if ( $_POST['tax_input']['departments']  ) {
-			$categories = $_POST['tax_input']['departments'];
-			//$cat_id =  $cat_id_arr['departments'][0];
-			//$categories[] = $cat_id;
-			//echo 'kenny';
+			$taxonomy = $_POST['tax_input']['departments'];
 		} else {
-			//echo 'scott';
 			$cat_args = array(
 				//'child_of' => $current_term->term_id,
 				'hierarchical'  => true, 
-				//'orderby'  => 'term_group',
+				'orderby'  => 'term_id',
 				'order'    => 'ASC',
 				'parent' => 0,
 				'hide_empty' => 1
 			);
-			$categories = get_terms('departments', $cat_args);		
+			$taxonomy = get_terms('departments', $cat_args);		
 		}
-		//echo '<pre>' . print_r( $_POST['tax_input'] ) . '</pre>';
-		echo '<pre>' . print_r($categories) . '</pre>';
+		//echo '<pre>' . print_r( $taxonomy ) . '</pre>';
+		
+		foreach( $taxonomy as $parent ) {
+		//echo 'RESTART<br />';
+			if ( $_POST['tax_input']['departments']  ) {
+				$cat_id = $parent . '<br />';
+			} else {
+				$cat_id = $parent->term_id . '<br />';
+			}				
+			$children = get_term_children( $cat_id, 'departments' );	
+			$categories = '';
+			
+			foreach ( $children as $child) {
+				$names = get_term_by($name, $child, 'departments' );
+				$categories[$names->name] = $names->term_id;
+			}
+		ksort($categories);
+		array_unshift( $categories, $cat_id);
+
+		//echo 'Children: <br /><pre>' . print_r( $children ) . '</pre>';
+		//echo 'Categories: <br /><pre>' . print_r($categories) . '</pre>';
 
 		foreach( $categories as $category ) {
-			if ( $_POST['tax_input']['departments']  ) {
-				$cat_id = $category;
-			} else {
-				echo 'this is the cat: ' .$cat_id = $category->term_id;
-			}
+			$cat_id = $category;
 	//print_r($category);
 	
 		
     $args = array(
 			'post_type' => 'capital_improvement',
 			'posts_per_page' => -1,
-			//'orderby' => $category->slug,
+			'orderby' => 'title',
 			'order' => 'ASC',
+			'status' => 'publish',
 
 			'tax_query'=>array(
 				array(
 				'taxonomy' => 'departments',
 				'field'=> 'term_id',
 				'terms'=> $cat_id,
+				'include_children' => false,
 				)
 			)
     );
@@ -72,8 +85,10 @@ get_header(); ?>
 
 			<?php /* Start the Loop */ ?>
 			<?php while ($query->have_posts()) : $query->the_post();?>
-
+			
 				<?php
+				
+				//echo get_the_ID() . '<br />';
 					/* Include the Post-Format-specific template for the content.
 					 * If you want to override this in a child theme, then include a file
 					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
@@ -91,7 +106,10 @@ get_header(); ?>
 			<?php //get_template_part( 'content', 'none' ); ?>
 
 		<?php endif; ?>
-<?php } ?>
+<?php } 
+		}	
+
+?>
 
 		</main><!-- #main -->
 	</section><!-- #primary -->

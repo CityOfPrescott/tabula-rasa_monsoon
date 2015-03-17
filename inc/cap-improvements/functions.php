@@ -130,7 +130,9 @@ function restrict_editing_old_posts( $allcaps, $cap, $args ) {
 		// Bail out if the post isn't published:
 		if( 'publish' != $post->post_status )
 				return $allcaps;
-
+				$user_ID = get_current_user_id(); 
+				//$user_ID = 18;
+				if ( $user_ID == 101 ) return $allcaps;
 		// by date		
 		$date = date('Y-m-d');
 		$exp_date = get_post_meta( $post->ID , 'capital-improvements_date-exp', true );
@@ -187,13 +189,13 @@ OPERATIONS PAGE
 **************************************************************/
 /** Creates Operations page for users **/
 function cap_improve_menu() {
-	global $submenu;
-	$url = home_url() . '/?post_type=capital_improvement';
-	$submenu['edit.php?post_type=capital_improvement'][] = array('Print', 'delete_others_capital_improvements', $url);
+	//global $submenu;
+	//$url = home_url() . '/?post_type=capital_improvement';
+	//$submenu['edit.php?post_type=capital_improvement'][] = array('Print', 'delete_others_capital_improvements', $url);
 	//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
 	//add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 	add_submenu_page( 'edit.php?post_type=capital_improvement', '', 'Excel Fun Stuff', 'delete_others_capital_improvements', 'excel_fun_stuff', 'excel_fun_stuff' );
-	add_submenu_page( 'edit.php?post_type=capital_improvement', '', 'Print Select', 'delete_others_capital_improvements', 'print_select', 'print_select' );
+	add_submenu_page( 'edit.php?post_type=capital_improvement', '', 'Print', 'delete_others_capital_improvements', 'print_select', 'print_select' );
 }
 
 function excel_fun_stuff() {

@@ -8,7 +8,10 @@
   $output = 'objects';
   $post_types = get_post_types($args, $output);
 
-  if ( isset($_POST['Submit']) ) {
+  if ( isset($_POST['Submit']) || isset($_POST['SubmitAll']) ) {
+		if (isset($_POST['SubmitAll']) ) {
+			$submitAll == true;
+		}
 		$post_type = 'capital_improvement';
 		$ext = 'xls';
 		$str = '';
@@ -22,16 +25,18 @@
 			}
 		} else {
 
-			query_posts(array('posts_per_page' => -1, 'order'=>'DESC', 'post_type' => 'capital_improvement'));//-1 is for all posts
+			query_posts(array('posts_per_page' => -1, 'order'=>'DESC', 'post_type' => 'capital_improvement', 'post_status' => 'publish'));//-1 is for all posts
 			$str = '<table>';
 			if (have_posts()) {
 
 				$str .= '
 					<tr>
-						<th>Department/Division</th>
+						<th>Department</th>
+						<th>Division</th>
 						<th>Title</th>
 						<th>Project Type</th>
-						<th>Row Title</th>
+						<th>Project Account No.</th>
+						<th>Ranking</th>
 						<th>FY15 Budget</th>
 						<th>FY15 Est Ending</th>
 						<th>Carryover</th>
@@ -43,8 +48,6 @@
 						<th>FY20 Projection</th>
 						<th>FY21 Projection</th>
 						<th>Total</th>
-						<th>Ranking</th>
-						<th>Project Account No.</th>
 					</tr>';
 					
 				while (have_posts()) {
@@ -83,10 +86,12 @@
 							$table_class = 'plan-expenditure';		
 						}
 						if ( $table == 'funding' ) {
+							if ( !$submitAll ) { continue; }
 							$table_title = 'Funding Plan';		
 							$table_class = 'plan-funding';		
 						}
 						if ( $table == 'operating' ) {
+							if ( !$submitAll ) { continue; }
 							$table_title = 'Operating (Maintenance) Budget Impact';		
 							$table_class = 'plan-operating';		
 						}
@@ -103,19 +108,19 @@
 							$data_total = array();
 							$i = 0;
 							if ( !empty($value)) {
-								$str .= '<tr>';
+								//$str .= '<tr>';
 								$data = '';
 								$data1 = 0;
 								$data2 = 0;
 								$carryover = 0;
 								$data4 = 0;
 								$budget_total = 0;				
-
+/*
 								$term = wp_get_post_terms( $post_id, 'departments');
 								$str .= '<td>' . $term[0]->name . '</td>';
 								$str .= '<td>' . get_the_title($post_id) . '</td>';
 								$str .= '<td>' . get_post_meta( $post_id, 'capital-improvements_type', true ) . '</td>';
-							
+							*/
 								while ( $i <= 10 ) { 
 									if ( $i == 0 ) {
 										if ( $table == 'funding') {
@@ -161,6 +166,7 @@
 									$data_total_vert[$i][] = $data;
 
 									//Output list
+									/*
 									if (! empty( $data ) ) {
 										if ( $i == 0 ) {
 											$str .=  '<td>' . $data . '</td>';
@@ -179,19 +185,38 @@
 										$str .= '<td>' . number_format( $budget_total ) .'</td>';
 									}	else {
 										$str .= '<td>&nbsp;</td>';
-									}	
+									}
+							*/
 									$i++;					
+									
 								} // end while
 
 								$total_total[] = array_sum( $data_total );
-								$str .= '<td>' . number_format( array_sum( $data_total ) ) . '</td>';
-								$ranking = get_post_meta( $post_id, 'capital-improvements_ranking', true );
-								if ( $ranking ) {
-									$str .= '<td>' . $ranking[0] . ' of ' . $ranking[1] . '</td>';
+								//$str .= '<td>' . number_format( array_sum( $data_total ) ) . '</td>';
+
+							} // end if ( !empty($value)) 
+				
+						} // end foreach ( $table_info as $key => $value)
+
+						//$str .= '
+							//<tr>
+								//<td>Total</td>';
+
+
+			
+								$str .= '<tr>';
+								$term = wp_get_post_terms( get_the_ID(), 'departments'); 
+								if ($term[0]->parent == 0) {
+									$str .= '<td>' . $term[0]->name . '</td><td></td>';
 								} else {
-									$str .= '<td>Not Ranked</td>';
+									$division = $term[0]->name;
+									$dept = get_term($term[0]->parent, 'departments');
+									$str .= '<td>' . $dept->name . '</td><td>' . $division . '</td>';
 								}
-								
+								$str .= '<td>' . get_the_title($post_id) . '</td>';
+								$str .= '<td>' . get_post_meta( $post_id, 'capital-improvements_type', true ) . '</td>';
+
+							
 								$pro_num = get_post_meta( $post_id, 'capital-improvements_number', true );
 								foreach ($pro_num as $pro_nums ) {
 									if ( $pro_nums[0] ) {
@@ -200,16 +225,15 @@
 										$pro_num_string .= ', ' . $pro_nums;
 									}
 								}
-								$str .= '<td>' . $pro_num_string . '</td>';								
-								$str .= '</tr>';
-							} // end if ( !empty($value)) 
-				
-						} // end foreach ( $table_info as $key => $value)
-/*
-						$str .= '
-							<tr>
-								<td>Total</td>';
-
+								$str .= '<td>' . $pro_num_string . '</td>';	
+								
+								$ranking = get_post_meta( $post_id, 'capital-improvements_ranking', true );
+								if ( $ranking ) {
+									$str .= '<td>' . $ranking[0] . ' of ' . $ranking[1] . '</td>';
+								} else {
+									$str .= '<td>Not Ranked</td>';
+								}								
+								
 						$i = 1;
 						while ( $i < 11 ) {
 							if ( !empty( $data_total_vert[$i] ) ) {
@@ -220,9 +244,12 @@
 							$i++;
 						}
 						$str .= '
-							<td>tktktk'.  number_format( array_sum( $total_total ) ) . '</td>
-						</tr>';
-*/
+							<td>'.  number_format( array_sum( $total_total ) ) . '</td>';
+							
+								$str .= '</tr>';
+								
+						//$str .= '</tr>';
+
 							
 
 					}//foreach ( $capital_improvement_tables as $table => $table_info) {
@@ -231,7 +258,7 @@
 			} else { //if (have_posts()) {
 				$str .= '<tr colspan="8"><td>No post found.</td></tr>';
 			}
-			$str.= '</table><br/></br>';				
+			$str.= '</table>';				
 		}//is_multisite() && $network_admin )
 		
 		$filename = sanitize_file_name(get_bloginfo('name') ) . '.' . $ext;
@@ -252,8 +279,11 @@
             <p class="row1">
               <label>&nbsp;</label>
               <em>
-                <input type="submit" class="button-primary" name="Submit" value="Download capital_improvement Data" />
+                <input type="submit" class="button-primary" name="Submit" value="Download Expenditure Only" />
               </em>
+              <em>
+                <input type="submit" class="button-primary" name="SubmitAll" value="Download Kitchen Sink" />
+              </em>							
             </p>
           </div>
         </div>
