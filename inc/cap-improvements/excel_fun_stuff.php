@@ -7,10 +7,11 @@
   );
   $output = 'objects';
   $post_types = get_post_types($args, $output);
-
+	$submitAll = '';
+	
   if ( isset($_POST['Submit']) || isset($_POST['SubmitAll']) ) {
 		if (isset($_POST['SubmitAll']) ) {
-			$submitAll == true;
+			$submitAll = true;
 		}
 		$post_type = 'capital_improvement';
 		$ext = 'xls';
@@ -25,7 +26,7 @@
 			}
 		} else {
 
-			query_posts(array('posts_per_page' => -1, 'order'=>'DESC', 'post_type' => 'capital_improvement', 'post_status' => 'publish'));//-1 is for all posts
+			query_posts(array('posts_per_page' => -1, 'order'=>'ASC', 'post_type' => 'capital_improvement', 'post_status' => 'publish'));//-1 is for all posts
 			$str = '<table>';
 			if (have_posts()) {
 
@@ -36,7 +37,16 @@
 						<th>Title</th>
 						<th>Project Type</th>
 						<th>Project Account No.</th>
-						<th>Ranking</th>
+						<th>Rankings</th>';
+						
+						if ( $submitAll == true ) {
+							$str .= '
+								<th>Table</th>
+								<th>Table Heading</th>
+							';
+						}
+						
+						$str .= '
 						<th>FY15 Budget</th>
 						<th>FY15 Est Ending</th>
 						<th>Carryover</th>
@@ -81,6 +91,7 @@
 					);
 
 					foreach ( $capital_improvement_tables as $table => $table_info) {
+	//print_r($capital_improvement_tables);							
 						if ( $table == 'expenditure' ) {
 							$table_title = 'Expenditure Plan';		
 							$table_class = 'plan-expenditure';		
@@ -97,14 +108,19 @@
 						}
 						$goahead = '';
 						foreach ( $table_info as $key => $value) {
+						//print_r($value);
 							$goahead .= array_sum($value);
 						}
-						if ($goahead == 0 )  { continue; }
+						//echo $goahead . '<br />';
+						if ($goahead === 0 )  { continue; }
 
 						$data_total_vert = array();
 						$total_total = array();				
-							
+						
+						$excel_count = 0;				
 						foreach ( $table_info as $key => $value) {
+	//print_r($table_info);				
+				
 							$data_total = array();
 							$i = 0;
 							if ( !empty($value)) {
@@ -114,13 +130,54 @@
 								$data2 = 0;
 								$carryover = 0;
 								$data4 = 0;
-								$budget_total = 0;				
-/*
-								$term = wp_get_post_terms( $post_id, 'departments');
-								$str .= '<td>' . $term[0]->name . '</td>';
-								$str .= '<td>' . get_the_title($post_id) . '</td>';
-								$str .= '<td>' . get_post_meta( $post_id, 'capital-improvements_type', true ) . '</td>';
-							*/
+								$budget_total = 0;			
+
+
+								
+								
+								if ( $submitAll == true || $excel_count == 0 ) {
+									$str2 = '<tr>';
+									$term = wp_get_post_terms( get_the_ID(), 'departments'); 
+									if ($term[0]->parent == 0) {
+										$str2 .= '<td>' . $term[0]->name . '</td><td></td>';
+									} else {
+										$division = $term[0]->name;
+										$dept = get_term($term[0]->parent, 'departments');
+										$str2 .= '<td>' . $dept->name . '</td><td>' . $division . '</td>';
+									}
+									$str2 .= '<td>'. get_the_title($post_id) . '</td>';
+									//$str2 .= '<td>'. $post_id . '</td>';
+									$str2 .= '<td>' . get_post_meta( $post_id, 'capital-improvements_type', true ) . '</td>';
+			
+									$pro_num_str2ing = '';
+									$pro_num = get_post_meta( $post_id, 'capital-improvements_number', true );
+									foreach ($pro_num as $pro_nums ) {
+										if ( $pro_nums[0] ) {
+											$pro_num_str2ing = $pro_nums;
+										} else {
+											$pro_num_str2ing .= ', ' . $pro_nums;
+										}
+									}
+									$str2 .= '<td>' . $pro_num_str2ing . '</td>';	
+									
+									$rankinging = '';
+									$ranking = get_post_meta( $post_id, 'capital-improvements_ranking', true );
+									if ( $ranking ) {
+										$str2 .= '<td>' . $ranking[0] . ' of ' . $ranking[1] . '</td>';
+									} else {
+										$str2 .= '<td>Not Ranked</td>';
+									}
+									
+															
+								}
+								if ( $submitAll == true ) {
+									$str2 .= '<td>' . $table_title . '</td>';
+								}
+								if ( $submitAll == true || $excel_count == 0 ) {
+									$str .= $str2;
+								}
+								$excel_count++;			
+								
 								while ( $i <= 10 ) { 
 									if ( $i == 0 ) {
 										if ( $table == 'funding') {
@@ -166,97 +223,64 @@
 									$data_total_vert[$i][] = $data;
 
 									//Output list
-									/*
-									if (! empty( $data ) ) {
-										if ( $i == 0 ) {
-											$str .=  '<td>' . $data . '</td>';
-										} else {
-											$str .= '<td>' . number_format( $data ) . '</td>';
-										}
-									} elseif ( $i == 0 ) {
-										$str .= '<td>' . $data . '</td>';
-									} elseif ( $i == 3 ) {
-										if ( $carryover == '' ) {
+									if ( $submitAll) {
+										if (! empty( $data ) ) {
+											if ( $i == 0 ) {
+												$str .=  '<td>' . $data . '</td>';
+											} else {
+												$str .= '<td>' . number_format( $data ) . '</td>';
+											}
+										} elseif ( $i == 0 ) {
+											$str .= '<td>' . $data . '</td>';
+										} elseif ( $i == 3 ) {
+											if ( $carryover == '' ) {
+												$str .= '<td>&nbsp;</td>';
+											} else {
+												$str .= '<td>' . number_format( $carryover ) .'</td>';
+											}
+										} elseif ( $i == 5 ) {
+											$str .= '<td>' . number_format( $budget_total ) .'</td>';
+										}	else {
 											$str .= '<td>&nbsp;</td>';
-										} else {
-											$str .= '<td>' . number_format( $carryover ) .'</td>';
 										}
-									} elseif ( $i == 5 ) {
-										$str .= '<td>' . number_format( $budget_total ) .'</td>';
-									}	else {
-										$str .= '<td>&nbsp;</td>';
 									}
-							*/
 									$i++;					
 									
 								} // end while
-
+								
+								//$str .= '</tr>';
 								$total_total[] = array_sum( $data_total );
-								//$str .= '<td>' . number_format( array_sum( $data_total ) ) . '</td>';
+								if ( $submitAll == true ) {
+									$str .= '<td>' . number_format( array_sum( $data_total ) ) . '</td>';
+								}
 
 							} // end if ( !empty($value)) 
-				
 						} // end foreach ( $table_info as $key => $value)
+						
 
-						//$str .= '
-							//<tr>
-								//<td>Total</td>';
-
-
-			
-								$str .= '<tr>';
-								$term = wp_get_post_terms( get_the_ID(), 'departments'); 
-								if ($term[0]->parent == 0) {
-									$str .= '<td>' . $term[0]->name . '</td><td></td>';
-								} else {
-									$division = $term[0]->name;
-									$dept = get_term($term[0]->parent, 'departments');
-									$str .= '<td>' . $dept->name . '</td><td>' . $division . '</td>';
-								}
-								$str .= '<td>' . get_the_title($post_id) . '</td>';
-								$str .= '<td>' . get_post_meta( $post_id, 'capital-improvements_type', true ) . '</td>';
-
-							
-								$pro_num = get_post_meta( $post_id, 'capital-improvements_number', true );
-								foreach ($pro_num as $pro_nums ) {
-									if ( $pro_nums[0] ) {
-										$pro_num_string = $pro_nums;
-									} else {
-										$pro_num_string .= ', ' . $pro_nums;
-									}
-								}
-								$str .= '<td>' . $pro_num_string . '</td>';	
-								
-								$ranking = get_post_meta( $post_id, 'capital-improvements_ranking', true );
-								if ( $ranking ) {
-									$str .= '<td>' . $ranking[0] . ' of ' . $ranking[1] . '</td>';
-								} else {
-									$str .= '<td>Not Ranked</td>';
-								}								
-								
-						$i = 1;
-						while ( $i < 11 ) {
-							if ( !empty( $data_total_vert[$i] ) ) {
-								$str .= '<td>' . number_format( array_sum( $data_total_vert[$i] ) ) . '</td>';
-							} else {
-								$str .= '<td></td>';
-							}
-							$i++;
+						if ( $submitAll == true ) {
+							//$str .= '<tr>';
+							$str .= $str2;
+							$str .= '<td>Total</td>';
 						}
-						$str .= '
-							<td>'.  number_format( array_sum( $total_total ) ) . '</td>';
-							
-								$str .= '</tr>';
+							$i = 1;
+							while ( $i < 11 ) {
+								if ( !empty( $data_total_vert[$i] ) ) {
+									$str .= '<td>' . number_format( array_sum( $data_total_vert[$i] ) ) . '</td>';
+								} else {
+									$str .= '<td></td>';
+								}
+								$i++;
+							}
+							$str .= '
+								<td>'.  number_format( array_sum( $total_total ) ) . '</td>';
 								
-						//$str .= '</tr>';
-
-							
-
+$str .= '</tr>';
 					}//foreach ( $capital_improvement_tables as $table => $table_info) {
 				} //while (have_posts()) {
-				wp_reset_query();
+				//wp_reset_query();
 			} else { //if (have_posts()) {
-				$str .= '<tr colspan="8"><td>No post found.</td></tr>';
+				$str .= '';
 			}
 			$str.= '</table>';				
 		}//is_multisite() && $network_admin )
@@ -291,17 +315,4 @@
     </form> <?php
   } 
 
-/*
-$str.= '
-	<tr>
-		<td>' . mb_convert_encoding($post_id, 'HTML-ENTITIES', 'UTF-8') . '</td>
-		<td>' . mb_convert_encoding(get_the_title(), 'HTML-ENTITIES', 'UTF-8') . '</td>
-		<td>' . mb_convert_encoding($name, 'HTML-ENTITIES', 'UTF-8') . '</td>
-		<td>' . mb_convert_encoding($type_name, 'HTML-ENTITIES', 'UTF-8') . '</td>
-		<td>' . mb_convert_encoding($sponsor, 'HTML-ENTITIES', 'UTF-8') . '</td>
-		<td>' . mb_convert_encoding($edited_on, 'HTML-ENTITIES', 'UTF-8') . '</td>
-		<td>' . mb_convert_encoding($edited_by, 'HTML-ENTITIES', 'UTF-8') . '</td>						
-	</tr>';
-	*/
-					
 ?>
