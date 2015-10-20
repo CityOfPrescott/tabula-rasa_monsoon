@@ -12,8 +12,8 @@ get_header(); ?>
 	</header><!-- .entry-header -->
 <section class="ci_text">
 	<div class="gen-data">
-		<h2 class="break-here">General Project Data</h2>
-		<p><span>Project/Equipment Title:</span><?php echo the_title(); ?></p>
+		<h2><?php echo the_title(); ?></h2>
+		<h3>General Project Data</h3>
 		<p><span>Project Type:</span><?php echo get_post_meta( get_the_ID(), 'capital-improvements_type', true ); ?></p>
 		<p><span>Department/Division:</span>
 			<?php 
@@ -29,7 +29,7 @@ get_header(); ?>
 		</p>
 	</div>
 	<div class="account_num">
-		<h2>Project Account No.:</h2>
+		<h3>Project Account No.:</h3>
 		<ul>
 			<?php
 			$table_array = get_post_meta( get_the_ID(), 'capital-improvements_number', true );
@@ -49,7 +49,7 @@ get_header(); ?>
 	if ( $description ) {
 	?>
 	<div class="description">
-		<h2>Project/Equipment Description</h2>
+		<h3>Project/Equipment Description</h3>
 		<p><?php echo wpautop($description); ?></p>
 	</div>
 	<?php
@@ -58,7 +58,7 @@ get_header(); ?>
 	if ( $budget_impact ) {
 	?>	
 	<div class="budget-impact">
-		<h2>Operating Budget Impact</h2>
+		<h3>Operating Budget Impact</h3>
 		<p><?php echo wpautop($budget_impact); ?></p>
 	</div>
 	<?php
@@ -67,7 +67,7 @@ get_header(); ?>
 	if ( $justification ) {
 	?>		
 	<div class="justification">
-		<h2>Justification (Benefit to Community or Legal Requirement)</h2>
+		<h3>Justification (Benefit to Community or Legal Requirement)</h3>
 		<p><?php echo wpautop($justification); ?></p>	
 	</div>
 	<?php
@@ -76,7 +76,7 @@ get_header(); ?>
 	if ( $goal ) {
 	?>	
 	<div class="goal">
-		<h2>Council Goal or Priority Level</h2>
+		<h3>Council Goal or Priority Level</h3>
 		<p><?php echo wpautop($goal); ?></p>		
 	</div>
 	<?php

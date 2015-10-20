@@ -46,7 +46,7 @@ get_header(); ?>
 	<div id="column_2">
 		<ul id="nav">
 			<li>
-				<a href="http://monsoon.ad.cityofprescott.org/?page_id=8423">
+				<a href="http://monsoon.ad.cityofprescott.org/?page_id=8481#phones">
 					<img src="/_i/icons/mitel.gif" class="button_portal" \>
 					<span class="title">Mitel Phones</span>
 					<span class="description">User guides, quick reference materials, phone label templates.</span>

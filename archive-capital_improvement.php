@@ -20,6 +20,9 @@ get_header(); ?>
 			</header><!-- .page-header -->
 			
 		<?php
+		if (isset($_POST['Orderbynumber']) ) {
+			$OBN = true;
+		}		
 		if ( $_POST['tax_input']['departments']  ) {
 			$taxonomy = $_POST['tax_input']['departments'];
 		} else {
@@ -31,27 +34,55 @@ get_header(); ?>
 				'parent' => 0,
 				'hide_empty' => 1
 			);
-			$taxonomy = get_terms('departments', $cat_args);		
+			if ( $OBN ) {
+				$unordered = get_terms('departments', $cat_args);	
+					foreach ( $unordered as $tax ) {
+						$tax_name = $tax->name;
+						$tax_name = substr($tax_name, -4);
+						$taxonomy[$tax_name] = $tax->term_id;
+					}
+				ksort($taxonomy);			
+			} else {
+				$taxonomy = get_terms('departments', $cat_args);	
+			}
+
 		}
 		//echo '<pre>' . print_r( $taxonomy ) . '</pre>';
 		
 		foreach( $taxonomy as $parent ) {
 		//echo 'RESTART<br />';
 			if ( $_POST['tax_input']['departments']  ) {
-				$cat_id = $parent . '<br />';
+				$cat_id = $parent;
 			} else {
-				$cat_id = $parent->term_id . '<br />';
+				if ( $OBN ) {
+					$cat_id = $parent;
+				} else {
+					$cat_id = $parent->term_id;
+				}
+				
+				//
 			}				
 			$children = get_term_children( $cat_id, 'departments' );	
-			$categories = '';
+			$categories = array();
 			
 			foreach ( $children as $child) {
 				$names = get_term_by($name, $child, 'departments' );
-				$categories[$names->name] = $names->term_id;
+				//echo $names->name . '<br />';
+				if ( $OBN ) {
+					$sub_tax_name = substr($names->name, -4);
+				} else {
+					$sub_tax_name = $names->name;
+				}				
+				//
+				
+				//echo '<br />';
+				$categories[$sub_tax_name] = $names->term_id;
 			}
+//echo '<pre>' . print_r( $categories ) . '</pre>';
 		ksort($categories);
-		array_unshift( $categories, $cat_id);
-
+		//echo '<pre>' . print_r( $categories ) . '</pre>';
+		array_unshift( $categories, $cat_id);		
+		//echo '<pre>' . print_r( $categories ) . '</pre>';
 		//echo 'Children: <br /><pre>' . print_r( $children ) . '</pre>';
 		//echo 'Categories: <br /><pre>' . print_r($categories) . '</pre>';
 

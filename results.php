@@ -120,8 +120,14 @@ if ($ldapbind) {
 				$photo = '<img src="/_i/employee-photo/'.$number.'.jpg" height="58" width="50" alt="" title="" />';
 			} elseif($number == 'department') {
 				$photo = '<img src="/_i/department.jpg" alt="Department" title="Department" />';
+			} elseif  ($item["department"][0] == 'IT ' ) { 
+				$photo = '<img src="/_i/helpdesk.png" alt="Help Desk" title="Help Desk" />'; 
 			} else {
-				$photo = '<img src="placeholder.jpg" alt="No photo" title="No photo" />';
+				$photo = '<img src="'.$number . '.jpg" alt="No photo" title="No photo" />';
+				$no_photo_array[] = $name . ' - ' . $number;
+			}
+			if ( $email == '<br /><a href="mailto:help@prescott-az.gov" title="help@prescott-az.gov">help@prescott-az.gov</a>' ) {
+				$photo = '<img src="/_i/helpdesk.png" alt="Help Desk" title="Help Desk" />';
 			}
 			
 //remove emp. num once done testing			
@@ -133,10 +139,24 @@ if ($ldapbind) {
 			echo "<td class=\"tcenter phone\">".$newphone."</td>\n";
 			echo "</tr>\n";
 			
+			$title = str_replace(', ', '', $title);
+			$full_lists[] = $number . '|' . $name . '|' . $item["department"][0]. '|' .$title;
 			$row_count++;
 	    }
 		echo "</tbody>\n</table>\n";
 	
+	//print_r( $no_photo_array );
+	/*
+	foreach ( $no_photo_array as $missing ) {
+		echo $missing . '<br />';
+	}
+	*/
+	
+	/*
+	foreach ( $full_lists as $list_item ) {
+		echo $list_item . '<br />';
+	}
+	*/
 	
 	//build department list
 /*$depts = array();

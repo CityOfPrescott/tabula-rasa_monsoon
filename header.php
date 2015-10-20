@@ -16,7 +16,9 @@
 <!--[if lte IE 8]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-
+<?php
+//echo $_SERVER['REMOTE_ADDR'];
+?>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +38,17 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="hfeed site">
+<?php 
+$ip = $_SERVER['REMOTE_ADDR'];
+	if ( $ip == '172.30.21.81' ) {
+		$ip = false;
+		//echo $ip;
+	} else {
+		$ip = false;
+	}
+?>
+
+<div id="page" class="hfeed site <?php if ( $ip == true) { echo "copperpot"; } ?>">
 	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'tabula-rasa' ); ?></a>
 
 	<header id="masthead" class="site-header" role="banner">

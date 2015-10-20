@@ -128,8 +128,11 @@ if ( isset($_POST['Submit']) ) {
 					<p class="row1">
 						<label>&nbsp;</label>
 						<em>
-							<input type="submit" class="button-primary" name="Submit" value="Submit" />
+							<input type="submit" class="button-primary" name="Submit" value="Order by Dept Name" />
 						</em>
+						<em>
+							<input type="submit" class="button-primary" name="Orderbynumber" value="Order by Dept Number" />
+						</em>						
 					</p>
 				</div>
 			</div>

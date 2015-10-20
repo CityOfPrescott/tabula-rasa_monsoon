@@ -152,7 +152,7 @@ get_header(); ?>
 		//continue;
 	}		
 						while ($row9 = mysql_fetch_array ($result9, MYSQL_ASSOC)) {
-							echo '<h4>' .$row9['sub_name']. '</h4>';
+							echo '<h4 id="' . str_replace(' ', '-', strtolower($row9['sub_name'] ) ) . '">' .$row9['sub_name']. '</h4>';
 							?>
 							<table class="docs_table">
 								<thead>

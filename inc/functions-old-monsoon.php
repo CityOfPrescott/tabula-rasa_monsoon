@@ -248,104 +248,77 @@ function my_wpcf7_form_elements($html) {
 
 add_filter('wpcf7_form_elements', 'my_wpcf7_form_elements');
 
-?>
-
-<?php
-
 // contact form 7 Add field to non wordpress database
 
 function wpcf7_do_something ($WPCF7_ContactForm) {
-
 	if ( 8444 == $WPCF7_ContactForm->id ) {
-
 		//require_once ('/usr/local/www/apache22/data/db_info.php');
-
 		if ( $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ) {
 			require_once ('db_info.php');
 		} else {
 			require_once ('/usr/local/www/apache22/data/db_info.php');
 		}	
+		$submission = WPCF7_Submission::get_instance();
+		if ( $submission ) {
+			$posted_data = $submission->get_posted_data();
+			$date = date("Y-m-d H:i:s"); 
+			$name = $posted_data["your-name"];
+			$phone = $posted_data["your-phone"];
+			$email = $posted_data["your-email"];
+			$dbc = db_connect ($db_info['central']);
+			$department = $posted_data["dept"];
 
-$submission = WPCF7_Submission::get_instance();
-if ( $submission ) {
-  $posted_data = $submission->get_posted_data();
-	
-	
-		$date = date("Y-m-d H:i:s"); 
+			$query = "SELECT * FROM departments ORDER by dept_id ASC";
+			$result = @mysql_query ($query);
+			
+			while ($row = mysql_fetch_array ($result, MYSQL_ASSOC)) 	{
+				if ($row['dept_name'] == $department) { $department = $row['dept_id'];}
+			}
 
-		$name = $posted_data["your-name"];
+			$location = $posted_data["location"];
+			$query = "SELECT * FROM buildings WHERE facilities_display = 'Y' ORDER by bldg_name ASC";
+			$result = @mysql_query ($query);
 
-		$phone = $posted_data["your-phone"];
+			while ($row = mysql_fetch_array ($result, MYSQL_ASSOC)) 	{
+				if ($row['bldg_name'] == $location) { $location = $row['bldg_id'];}
+			}
 
-		$email = $posted_data["your-email"];
+			$types_array = $posted_data["type"];
+			$types = implode(',', $types_array);
+			$import = $posted_data["import"];
+			$import = implode(',', $import);
+			$description = $posted_data["your-message"];
 
-		$dbc = db_connect ($db_info['central']);
+			$dbc = db_connect ($db_info['facilities_a']);	
 
-		$department = $posted_data["dept"];
+			// Query the db
+			$query = "INSERT INTO work_order (date_submitted, req_name, req_phone_ext, req_email, req_dept, work_location, work_type, work_description, work_status, import) VALUES ('$date', '$name', '$phone', '$email', '$department', '$location', '$types', '$description', 'Pending', '$import')";
+			$result = @mysql_query($query);
 
-		$query = "SELECT * FROM departments ORDER by dept_id ASC";
+			if ($result) {
+				$uid = mysql_insert_id();
+				$work_order_num = "WO-".date('Ymd')."";
+				$number = $work_order_num."-".$uid;
 
-		$result = @mysql_query ($query);
+				$query2 = "UPDATE work_order SET work_order_num = '$number' WHERE work_order_id = $uid";
+				$result2 = @mysql_query($query2);
 
-		while ($row = mysql_fetch_array ($result, MYSQL_ASSOC)) 	{
-
-		if ($row['dept_name'] == $department) { $department = $row['dept_id'];}
-
+				$headers  = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				//$headers .= 'From: Facilities <mic.fenech@prescott-az.gov>' . "\r\n";
+				
+				$message = '
+				<html>
+					<head></head>
+					<body>
+						<p>Your facilities request has been submitted. <br />You can check the progress by going to the <a href="http://monsoon.ad.cityofprescott.org/?page_id=8447">View Results page</a>. <br />Your work order number is <strong>'. $work_order_num . '</strong></p>
+					</body>
+				</html>';
+				
+				mail($email, 'Your Facilities Request', $message, $headers);
+			}	
 		}
-
-		$location = $posted_data["location"];
-
-		$query = "SELECT * FROM buildings WHERE facilities_display = 'Y' ORDER by bldg_name ASC";
-
-		$result = @mysql_query ($query);
-
-				while ($row = mysql_fetch_array ($result, MYSQL_ASSOC)) 	{
-
-		if ($row['bldg_name'] == $location) { $location = $row['bldg_id'];}
-
-		}
-
-		$types_array = $posted_data["type"];
-
-		$types = implode(',', $types_array);
-
-		$import = $posted_data["import"];
-		$import = implode(',', $import);
-
-		$description = $posted_data["your-message"];
-
-
-
-		
-		$dbc = db_connect ($db_info['facilities_a']);	
-
-		// Query the db
-
-		$query = "INSERT INTO work_order (date_submitted, req_name, req_phone_ext, req_email, req_dept, work_location, work_type, work_description, work_status, import) VALUES ('$date', '$name', '$phone', '$email', '$department', '$location', '$types', '$description', 'Pending', '$import')";
-
-		$result = @mysql_query($query);
-
-		
-
-		if ($result) {
-
-			$uid = mysql_insert_id();
-
-			$work_order_num = "WO-".date('Ymd')."";
-
-			$number = $work_order_num."-".$uid;
-
-
-
-			$query2 = "UPDATE work_order SET work_order_num = '$number' WHERE work_order_id = $uid";
-
-			$result2 = @mysql_query($query2);
-
-		}	
-}
 	}
-
 }
-
-add_action("wpcf7_before_send_mail", "wpcf7_do_something");
+//add_action("wpcf7_before_send_mail", "wpcf7_do_something");
 ?>

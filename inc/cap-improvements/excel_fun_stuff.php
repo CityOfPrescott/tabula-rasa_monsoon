@@ -150,13 +150,15 @@
 									$str2 .= '<td>' . get_post_meta( $post_id, 'capital-improvements_type', true ) . '</td>';
 			
 									$pro_num_str2ing = '';
+									$num_i = 0;
 									$pro_num = get_post_meta( $post_id, 'capital-improvements_number', true );
 									foreach ($pro_num as $pro_nums ) {
-										if ( $pro_nums[0] ) {
+										if ( $num_i == 0 ) {
 											$pro_num_str2ing = $pro_nums;
 										} else {
-											$pro_num_str2ing .= ', ' . $pro_nums;
+											$pro_num_str2ing .= '|' . $pro_nums;
 										}
+										$num_i++;
 									}
 									$str2 .= '<td>' . $pro_num_str2ing . '</td>';	
 									
